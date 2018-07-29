@@ -1,0 +1,1862 @@
+
+<!--Start Breadcrumb-->
+<div class="row">
+	<div id="breadcrumb" class="col-xs-12">
+		<ol class="breadcrumb">
+			<li><a href="index.html">系统首页</a></li>
+		</ol>
+	</div>
+</div>
+<!--End Breadcrumb-->
+<!--Start Dashboard 1-->
+<div id="dashboard-header" class="row">
+	<div class="col-xs-10 col-sm-2">
+		<h3>数据统计</h3>
+	</div>
+	<!--<div class="col-xs-2 col-sm-1 col-sm-offset-1">-->
+		<!--<div id="social" class="row">-->
+			<!--<a href="#"><i class="fa fa-google-plus"></i></a>-->
+			<!--<a href="#"><i class="fa fa-facebook"></i></a>-->
+			<!--<a href="#"><i class="fa fa-twitter"></i></a>-->
+			<!--<a href="#"><i class="fa fa-linkedin"></i></a>-->
+			<!--<a href="#"><i class="fa fa-youtube"></i></a>-->
+		<!--</div>-->
+	<!--</div>-->
+	<div class="clearfix visible-xs"></div>
+	<div class="col-xs-12 col-sm-8 col-md-7 pull-right">
+		<div class="row">
+			<div class="col-xs-4">
+			</div>
+			<div class="col-xs-4">
+			</div>
+			<div class="col-xs-4">
+				<div class="sparkline-dashboard" id="sparkline-3"></div>
+				<div class="sparkline-dashboard-info">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--End Dashboard 1-->
+
+<!--Start Dashboard 2-->
+<div class="row-fluid">
+	<div id="dashboard_links" class="col-xs-12 col-sm-2 pull-right">
+		<ul class="nav nav-pills nav-stacked">
+			<li class="active"><a href="#" class="tab-link" id="overview">门禁流量统计</a></li>
+			<li><a href="#" class="tab-link" id="clients">开门方式统计</a></li>
+			<li><a href="#" class="tab-link" id="graph">并发数统计</a></li>
+			<li><a href="#" class="tab-link" id="servers">人脸识别时间</a></li>
+		</ul>
+	</div>
+	<div id="dashboard_tabs" class="col-xs-12 col-sm-10">
+		<!--Start Dashboard Tab 1-->
+
+		<div>
+			<div id="dashboard-overview" class="row" style="width:100%; position: absolute;">
+		                     
+				
+			</div>
+			<div id='hint1'  align="center">
+               <img alt="" src="img/data/1-1.png" height="85">
+            </div>	
+
+		</div>
+
+		<!--Start Dashboard Tab 2-->
+		<div>
+			<div id="dashboard-clients" class="row" style="width:100%; visibility: hidden; position: absolute;">
+				
+			</div>
+
+		</div>
+		<!--End Dashboard Tab 2-->
+		<!--Start Dashboard Tab 3-->
+		<div>
+			<div id="dashboard-graph" class="row" style="width:100%; visibility: hidden; position: absolute;" >
+				<div class="col-xs-12">
+					<h4 class="page-header">OS Platform Statistics</h4>
+					<div id="stat-graph" style="height: 300px;"></div>
+				</div>
+			</div>
+			<div id='hint3' align="center">
+				<br>
+               <img alt="" src="img/data/3-1.png" height="85">
+            </div>
+		</div>
+		<!--End Dashboard Tab 3-->
+		<!--Start Dashboard Tab 4-->
+		<div>
+			<div id="dashboard-servers" class="row" style="width:100%; visibility: hidden; position: absolute;" >
+
+				<div class="clearfix"></div>
+			</div>
+			<div id='hint4' align="center">
+				<br>
+               <img alt="" src="img/data/4-1.png" height="85">
+            </div>
+		</div>
+		<!--End Dashboard Tab 4-->
+	</div>
+	<div class="clearfix"></div>
+</div>
+<!--End Dashboard 2 -->
+<div style="height: 40px;"></div>
+
+
+<script type="text/javascript">
+	// Array for random data for Sparkline
+	var sparkline_arr_1 = SparklineTestData();
+	var sparkline_arr_2 = SparklineTestData();
+	var sparkline_arr_3 = SparklineTestData();
+	$(document).ready(function() {
+		// Make all JS-activity for dashboard
+		DashboardTabChecker();
+		$("#hint1").show();
+		// Load Knob plugin and run callback for draw Knob charts for dashboard(tab-servers)
+		LoadKnobScripts(DrawKnobDashboard);
+		// Load Sparkline plugin and run callback for draw Sparkline charts for dashboard(top of dashboard + plot in tables)
+		LoadSparkLineScript(DrawSparklineDashboard);
+		// Load Morris plugin and run callback for draw Morris charts for dashboard
+		LoadMorrisScripts(MorrisDashboard);
+		// Make beauty hover in table
+		$("#ticker-table").beautyHover();
+		$("#overview").click();
+		$("#hint3").hide();
+		$("#hint4").hide();
+	});
+</script>
+<script type="text/javascript">
+$("#overview").click(function(){
+	$("#hint1").show();
+	$("#hint3").hide();
+	$("#hint4").hide();
+
+Highcharts.setOptions({colors: ['#54C3F1', '#474E5B','#90ED7D']});
+Highcharts.chart('dashboard-overview', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '各门禁的流量统计'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: '门禁流量数'
+        }
+    },
+    legend: {
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y}'
+            }
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+    },
+    series: [{
+        name: '门禁流量统计',
+        colorByPoint: false,
+        data: [{
+            name: '正大门',
+            y: 1227,
+            drilldown: '正大门'
+        }, {
+            name: '南大门',
+            y: 878,
+            drilldown: '南大门'
+        }, {
+            name: '西大门',
+            y: 951,
+            drilldown: '西大门'
+        }, {
+            name: '北大门',
+            y: 1095,
+            drilldown: '北大门'
+        }, {
+            name: '1幢1单元门',
+            y: 460,
+            drilldown: '1幢1单元门'
+        }, {
+            name: '1幢2单元门',
+            y: 685,
+            drilldown: '1幢2单元门'
+        },{
+            name: '2幢1单元门',
+            y: 594,
+            drilldown: '2幢1单元门'
+        },{
+            name: '2幢2单元门',
+            y: 499,
+            drilldown: '2幢2单元门'
+        },{
+            name: '3幢1单元门',
+            y: 701,
+            drilldown: '3幢1单元门'
+        },{
+            name: '3幢2单元门',
+            y: 588,
+            drilldown: '3幢2单元门'
+        }]
+    },{
+        name: '人脸识别开门',
+        colorByPoint: false,
+        data: [{
+            name: '正大门',
+            y: 981,
+            drilldown: '正大门人脸'
+        }, {
+            name: '南大门',
+            y: 684,
+            drilldown: '南大门'
+        }, {
+            name: '西大门',
+            y: 780,
+            drilldown: '西大门'
+        }, {
+            name: '北大门',
+            y: 931,
+            drilldown: '北大门'
+        }, {
+            name: '1幢1单元门',
+            y: 368,
+            drilldown: '1幢1单元门'
+        }, {
+            name: '1幢2单元门',
+            y: 528,
+            drilldown: '1幢2单元门'
+        },{
+            name: '2幢1单元门',
+            y: 481,
+            drilldown: '2幢1单元门'
+        },{
+            name: '2幢2单元门',
+            y: 379,
+            drilldown: '2幢2单元门'
+        },{
+            name: '3幢1单元门',
+            y: 575,
+            drilldown: '3幢1单元门'
+        },{
+            name: '3幢2单元门',
+            y: 494,
+            drilldown: '3幢2单元门'
+        }]
+    }],
+    drilldown: {
+        series: [{
+            name: '正大门：流量统计',
+            id: '正大门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    13
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    4
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    27
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    54
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    102
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    167
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    246
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    134
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    273
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    83
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    91
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    33
+                ]
+            ]
+        },{
+            name: '正大门：人脸识别开门',
+            id: '正大门人脸',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    10
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    3
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    22
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    63
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    97
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    123
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    178
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    113
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    194
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    74
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    73
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    31
+                ]
+            ]
+        }, {
+            name: '南大门：流量统计',
+            id: '南大门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    8
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    2
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    13
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    34
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    76
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    91
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    137
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    204
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    175
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    73
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    54
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    29
+                ]
+            ]
+        },  {
+            name: '西大门：流量统计',
+            id: '西大门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    4
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    0
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    8
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    39
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    103
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    94
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    146
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    231
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    101
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    89
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    72
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    64
+                ]
+            ]
+        }, {
+            name: '北大门：流量统计',
+            id: '北大门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    3
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    18
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    36
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    57
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    113
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    109
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    164
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    194
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    168
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    105
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    77
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    51
+                ]
+            ]
+        },{
+            name: '1幢1单元门：流量统计',
+            id: '1幢1单元门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    0
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    5
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    4
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    27
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    33
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    29
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    73
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    89
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    94
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    61
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    34
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    11
+                ]
+            ]
+        },{
+            name: '1幢2单元门：流量统计',
+            id: '1幢2单元门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    2
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    8
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    16
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    51
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    49
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    64
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    92
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    109
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    117
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    83
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    69
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    25
+                ]
+            ]
+        }]
+    }
+});
+});
+</script>
+<script type="text/javascript">
+Highcharts.setOptions({colors: ['#54C3F1', '#474E5B','#90ED7D']});
+Highcharts.chart('dashboard-overview', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '各门禁的流量统计'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: '门禁流量数'
+        }
+    },
+    legend: {
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y}'
+            }
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+    },
+    series: [{
+        name: '门禁流量统计',
+        colorByPoint: false,
+        data: [{
+            name: '正大门',
+            y: 1227,
+            drilldown: '正大门'
+        }, {
+            name: '南大门',
+            y: 878,
+            drilldown: '南大门'
+        }, {
+            name: '西大门',
+            y: 951,
+            drilldown: '西大门'
+        }, {
+            name: '北大门',
+            y: 1095,
+            drilldown: '北大门'
+        }, {
+            name: '1幢1单元门',
+            y: 460,
+            drilldown: '1幢1单元门'
+        }, {
+            name: '1幢2单元门',
+            y: 685,
+            drilldown: '1幢2单元门'
+        },{
+            name: '2幢1单元门',
+            y: 594,
+            drilldown: '2幢1单元门'
+        },{
+            name: '2幢2单元门',
+            y: 499,
+            drilldown: '2幢2单元门'
+        },{
+            name: '3幢1单元门',
+            y: 701,
+            drilldown: '3幢1单元门'
+        },{
+            name: '3幢2单元门',
+            y: 588,
+            drilldown: '3幢2单元门'
+        }]
+    },{
+        name: '人脸识别开门',
+        colorByPoint: false,
+        data: [{
+            name: '正大门',
+            y: 981,
+            drilldown: '正大门人脸'
+        }, {
+            name: '南大门',
+            y: 684,
+            drilldown: '南大门'
+        }, {
+            name: '西大门',
+            y: 780,
+            drilldown: '西大门'
+        }, {
+            name: '北大门',
+            y: 931,
+            drilldown: '北大门'
+        }, {
+            name: '1幢1单元门',
+            y: 368,
+            drilldown: '1幢1单元门'
+        }, {
+            name: '1幢2单元门',
+            y: 528,
+            drilldown: '1幢2单元门'
+        },{
+            name: '2幢1单元门',
+            y: 481,
+            drilldown: '2幢1单元门'
+        },{
+            name: '2幢2单元门',
+            y: 379,
+            drilldown: '2幢2单元门'
+        },{
+            name: '3幢1单元门',
+            y: 575,
+            drilldown: '3幢1单元门'
+        },{
+            name: '3幢2单元门',
+            y: 494,
+            drilldown: '3幢2单元门'
+        }]
+    }],
+    drilldown: {
+        series: [{
+            name: '正大门：流量统计',
+            id: '正大门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    13
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    4
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    27
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    54
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    102
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    167
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    246
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    134
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    273
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    83
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    91
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    33
+                ]
+            ]
+        },{
+            name: '正大门：人脸识别开门',
+            id: '正大门人脸',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    10
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    3
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    22
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    63
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    97
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    123
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    178
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    113
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    194
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    74
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    73
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    31
+                ]
+            ]
+        }, {
+            name: '南大门：流量统计',
+            id: '南大门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    8
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    2
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    13
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    34
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    76
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    91
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    137
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    204
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    175
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    73
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    54
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    29
+                ]
+            ]
+        },  {
+            name: '西大门：流量统计',
+            id: '西大门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    4
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    0
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    8
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    39
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    103
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    94
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    146
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    231
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    101
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    89
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    72
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    64
+                ]
+            ]
+        }, {
+            name: '北大门：流量统计',
+            id: '北大门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    3
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    18
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    36
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    57
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    113
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    109
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    164
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    194
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    168
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    105
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    77
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    51
+                ]
+            ]
+        },{
+            name: '1幢1单元门：流量统计',
+            id: '1幢1单元门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    0
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    5
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    4
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    27
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    33
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    29
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    73
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    89
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    94
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    61
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    34
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    11
+                ]
+            ]
+        },{
+            name: '1幢2单元门：流量统计',
+            id: '1幢2单元门',
+            data: [
+                [
+                    '00:00 ~ 02:00',
+                    2
+                ],
+                [
+                    '02:00 ~ 04:00',
+                    8
+                ],
+                [
+                    '04:00 ~ 06:00',
+                    16
+                ],
+                [
+                    '06:00 ~ 08:00',
+                    51
+                ],
+                [
+                    '08:00 ~ 10:00',
+                    49
+                ],
+                [
+                    '10:00 ~ 12:00',
+                    64
+                ],
+                [
+                    '12:00 ~ 14:00',
+                    92
+                ],
+                [
+                    '14:00 ~ 16:00',
+                    109
+                ],
+                [
+                    '16:00 ~ 18:00',
+                    117
+                ],
+                [
+                    '18:00 ~ 20:00',
+                    83
+                ],
+                [
+                    '20:00 ~ 22:00',
+                    69
+                ],
+                [
+                    '22:00 ~ 24:00',
+                    25
+                ]
+            ]
+        }]
+    }
+});
+</script>
+<script type="text/javascript">
+function first () {
+	Highcharts.setOptions({colors: ['#54C3F1', '#474E5B','#90ED7D']});
+	Highcharts.chart('dashboard-overview', {
+	    chart: {
+	        type: 'column'
+	    },
+	    title: {
+	        text: '各门禁的流量统计'
+	    },
+	    subtitle: {
+	        text: ''
+	    },
+	    xAxis: {
+	        type: 'category'
+	    },
+	    yAxis: {
+	        title: {
+	            text: '门禁流量数'
+	        }
+	    },
+	    legend: {
+	    },
+	    plotOptions: {
+	        series: {
+	            borderWidth: 0,
+	            dataLabels: {
+	                enabled: true,
+	                format: '{point.y}'
+	            }
+	        }
+	    },
+	    tooltip: {
+	        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+	        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+	    },
+	    series: [{
+	        name: '门禁流量统计',
+	        colorByPoint: false,
+	        data: [{
+	            name: '正大门',
+	            y: 1227,
+	            drilldown: '正大门'
+	        }, {
+	            name: '南大门',
+	            y: 878,
+	            drilldown: '南大门'
+	        }, {
+	            name: '西大门',
+	            y: 951,
+	            drilldown: '西大门'
+	        }, {
+	            name: '北大门',
+	            y: 1095,
+	            drilldown: '北大门'
+	        }, {
+	            name: '1幢1单元门',
+	            y: 460,
+	            drilldown: '1幢1单元门'
+	        }, {
+	            name: '1幢2单元门',
+	            y: 685,
+	            drilldown: '1幢2单元门'
+	        },{
+	            name: '2幢1单元门',
+	            y: 594,
+	            drilldown: '2幢1单元门'
+	        },{
+	            name: '2幢2单元门',
+	            y: 499,
+	            drilldown: '2幢2单元门'
+	        },{
+	            name: '3幢1单元门',
+	            y: 701,
+	            drilldown: '3幢1单元门'
+	        },{
+	            name: '3幢2单元门',
+	            y: 588,
+	            drilldown: '3幢2单元门'
+	        }]
+	    },{
+	        name: '人脸识别开门',
+	        colorByPoint: false,
+	        data: [{
+	            name: '正大门',
+	            y: 981,
+	            drilldown: '正大门人脸'
+	        }, {
+	            name: '南大门',
+	            y: 684,
+	            drilldown: '南大门'
+	        }, {
+	            name: '西大门',
+	            y: 780,
+	            drilldown: '西大门'
+	        }, {
+	            name: '北大门',
+	            y: 931,
+	            drilldown: '北大门'
+	        }, {
+	            name: '1幢1单元门',
+	            y: 368,
+	            drilldown: '1幢1单元门'
+	        }, {
+	            name: '1幢2单元门',
+	            y: 528,
+	            drilldown: '1幢2单元门'
+	        },{
+	            name: '2幢1单元门',
+	            y: 481,
+	            drilldown: '2幢1单元门'
+	        },{
+	            name: '2幢2单元门',
+	            y: 379,
+	            drilldown: '2幢2单元门'
+	        },{
+	            name: '3幢1单元门',
+	            y: 575,
+	            drilldown: '3幢1单元门'
+	        },{
+	            name: '3幢2单元门',
+	            y: 494,
+	            drilldown: '3幢2单元门'
+	        }]
+	    }],
+	    drilldown: {
+	        series: [{
+	            name: '正大门：流量统计',
+	            id: '正大门',
+	            data: [
+	                [
+	                    '00:00 ~ 02:00',
+	                    13
+	                ],
+	                [
+	                    '02:00 ~ 04:00',
+	                    4
+	                ],
+	                [
+	                    '04:00 ~ 06:00',
+	                    27
+	                ],
+	                [
+	                    '06:00 ~ 08:00',
+	                    54
+	                ],
+	                [
+	                    '08:00 ~ 10:00',
+	                    102
+	                ],
+	                [
+	                    '10:00 ~ 12:00',
+	                    167
+	                ],
+	                [
+	                    '12:00 ~ 14:00',
+	                    246
+	                ],
+	                [
+	                    '14:00 ~ 16:00',
+	                    134
+	                ],
+	                [
+	                    '16:00 ~ 18:00',
+	                    273
+	                ],
+	                [
+	                    '18:00 ~ 20:00',
+	                    83
+	                ],
+	                [
+	                    '20:00 ~ 22:00',
+	                    91
+	                ],
+	                [
+	                    '22:00 ~ 24:00',
+	                    33
+	                ]
+	            ]
+	        },{
+	            name: '正大门：人脸识别开门',
+	            id: '正大门人脸',
+	            data: [
+	                [
+	                    '00:00 ~ 02:00',
+	                    10
+	                ],
+	                [
+	                    '02:00 ~ 04:00',
+	                    3
+	                ],
+	                [
+	                    '04:00 ~ 06:00',
+	                    22
+	                ],
+	                [
+	                    '06:00 ~ 08:00',
+	                    63
+	                ],
+	                [
+	                    '08:00 ~ 10:00',
+	                    97
+	                ],
+	                [
+	                    '10:00 ~ 12:00',
+	                    123
+	                ],
+	                [
+	                    '12:00 ~ 14:00',
+	                    178
+	                ],
+	                [
+	                    '14:00 ~ 16:00',
+	                    113
+	                ],
+	                [
+	                    '16:00 ~ 18:00',
+	                    194
+	                ],
+	                [
+	                    '18:00 ~ 20:00',
+	                    74
+	                ],
+	                [
+	                    '20:00 ~ 22:00',
+	                    73
+	                ],
+	                [
+	                    '22:00 ~ 24:00',
+	                    31
+	                ]
+	            ]
+	        }, {
+	            name: '南大门：流量统计',
+	            id: '南大门',
+	            data: [
+	                [
+	                    '00:00 ~ 02:00',
+	                    8
+	                ],
+	                [
+	                    '02:00 ~ 04:00',
+	                    2
+	                ],
+	                [
+	                    '04:00 ~ 06:00',
+	                    13
+	                ],
+	                [
+	                    '06:00 ~ 08:00',
+	                    34
+	                ],
+	                [
+	                    '08:00 ~ 10:00',
+	                    76
+	                ],
+	                [
+	                    '10:00 ~ 12:00',
+	                    91
+	                ],
+	                [
+	                    '12:00 ~ 14:00',
+	                    137
+	                ],
+	                [
+	                    '14:00 ~ 16:00',
+	                    204
+	                ],
+	                [
+	                    '16:00 ~ 18:00',
+	                    175
+	                ],
+	                [
+	                    '18:00 ~ 20:00',
+	                    73
+	                ],
+	                [
+	                    '20:00 ~ 22:00',
+	                    54
+	                ],
+	                [
+	                    '22:00 ~ 24:00',
+	                    29
+	                ]
+	            ]
+	        },  {
+	            name: '西大门：流量统计',
+	            id: '西大门',
+	            data: [
+	                [
+	                    '00:00 ~ 02:00',
+	                    4
+	                ],
+	                [
+	                    '02:00 ~ 04:00',
+	                    0
+	                ],
+	                [
+	                    '04:00 ~ 06:00',
+	                    8
+	                ],
+	                [
+	                    '06:00 ~ 08:00',
+	                    39
+	                ],
+	                [
+	                    '08:00 ~ 10:00',
+	                    103
+	                ],
+	                [
+	                    '10:00 ~ 12:00',
+	                    94
+	                ],
+	                [
+	                    '12:00 ~ 14:00',
+	                    146
+	                ],
+	                [
+	                    '14:00 ~ 16:00',
+	                    231
+	                ],
+	                [
+	                    '16:00 ~ 18:00',
+	                    101
+	                ],
+	                [
+	                    '18:00 ~ 20:00',
+	                    89
+	                ],
+	                [
+	                    '20:00 ~ 22:00',
+	                    72
+	                ],
+	                [
+	                    '22:00 ~ 24:00',
+	                    64
+	                ]
+	            ]
+	        }, {
+	            name: '北大门：流量统计',
+	            id: '北大门',
+	            data: [
+	                [
+	                    '00:00 ~ 02:00',
+	                    3
+	                ],
+	                [
+	                    '02:00 ~ 04:00',
+	                    18
+	                ],
+	                [
+	                    '04:00 ~ 06:00',
+	                    36
+	                ],
+	                [
+	                    '06:00 ~ 08:00',
+	                    57
+	                ],
+	                [
+	                    '08:00 ~ 10:00',
+	                    113
+	                ],
+	                [
+	                    '10:00 ~ 12:00',
+	                    109
+	                ],
+	                [
+	                    '12:00 ~ 14:00',
+	                    164
+	                ],
+	                [
+	                    '14:00 ~ 16:00',
+	                    194
+	                ],
+	                [
+	                    '16:00 ~ 18:00',
+	                    168
+	                ],
+	                [
+	                    '18:00 ~ 20:00',
+	                    105
+	                ],
+	                [
+	                    '20:00 ~ 22:00',
+	                    77
+	                ],
+	                [
+	                    '22:00 ~ 24:00',
+	                    51
+	                ]
+	            ]
+	        },{
+	            name: '1幢1单元门：流量统计',
+	            id: '1幢1单元门',
+	            data: [
+	                [
+	                    '00:00 ~ 02:00',
+	                    0
+	                ],
+	                [
+	                    '02:00 ~ 04:00',
+	                    5
+	                ],
+	                [
+	                    '04:00 ~ 06:00',
+	                    4
+	                ],
+	                [
+	                    '06:00 ~ 08:00',
+	                    27
+	                ],
+	                [
+	                    '08:00 ~ 10:00',
+	                    33
+	                ],
+	                [
+	                    '10:00 ~ 12:00',
+	                    29
+	                ],
+	                [
+	                    '12:00 ~ 14:00',
+	                    73
+	                ],
+	                [
+	                    '14:00 ~ 16:00',
+	                    89
+	                ],
+	                [
+	                    '16:00 ~ 18:00',
+	                    94
+	                ],
+	                [
+	                    '18:00 ~ 20:00',
+	                    61
+	                ],
+	                [
+	                    '20:00 ~ 22:00',
+	                    34
+	                ],
+	                [
+	                    '22:00 ~ 24:00',
+	                    11
+	                ]
+	            ]
+	        },{
+	            name: '1幢2单元门：流量统计',
+	            id: '1幢2单元门',
+	            data: [
+	                [
+	                    '00:00 ~ 02:00',
+	                    2
+	                ],
+	                [
+	                    '02:00 ~ 04:00',
+	                    8
+	                ],
+	                [
+	                    '04:00 ~ 06:00',
+	                    16
+	                ],
+	                [
+	                    '06:00 ~ 08:00',
+	                    51
+	                ],
+	                [
+	                    '08:00 ~ 10:00',
+	                    49
+	                ],
+	                [
+	                    '10:00 ~ 12:00',
+	                    64
+	                ],
+	                [
+	                    '12:00 ~ 14:00',
+	                    92
+	                ],
+	                [
+	                    '14:00 ~ 16:00',
+	                    109
+	                ],
+	                [
+	                    '16:00 ~ 18:00',
+	                    117
+	                ],
+	                [
+	                    '18:00 ~ 20:00',
+	                    83
+	                ],
+	                [
+	                    '20:00 ~ 22:00',
+	                    69
+	                ],
+	                [
+	                    '22:00 ~ 24:00',
+	                    25
+	                ]
+	            ]
+	        }]
+	    }
+	    
+	});
+	$("#hint1").show();
+	$("#hint3").hide();
+	$("#hint4").hide();
+}
+</script>
+<script>
+	$("#clients").click(function(){
+		$("#hint1").hide();
+		$("#hint3").hide();
+		$("#hint4").hide();
+		Highcharts.chart('dashboard-clients', {
+			chart: {
+                type: 'pie'
+            },
+            title: {
+                text: '开门方式的使用比例'
+            },
+            subtitle: {
+                text: ''
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {point.y:.2f}%'
+                    }
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            },
+            colors: ['#005DAC', '#70C8DA', '#C7E8FA', '#54C3F1', '#00ADB8', '#71C7D4', '#BEDFC2','#DFF2FC', '#AFDDE7', '#6BC8F2'],
+		    series: [{
+		        name: '开门方式',
+		        colorByPoint: true,
+		        data: [{
+		            name: '人脸识别',
+		           	color:'#005DAC',
+		            y: 67.53,
+		            drilldown: 'face'
+		        }, {
+		            name: '二维码识别',
+		            color:'#70C8DA',
+		            y: 31.23,
+		            drilldown: 'code'
+		        }, {
+		            name: '其他方式',
+		            color:'#C7E8FA',
+		            y: 1.24,
+		            drilldown: 'help'
+		        }]
+		    }],
+		    drilldown: {
+		        series: [{
+		            name: '人脸识别',
+		            id: 'face',
+		            data: [
+		                ['正大门', 13.77],
+		                ['南大门', 8.25],
+		                ['西大门', 7.45],
+		                ['北大门', 11.73],
+		                ['1幢1单元门', 3.49],
+		                ['1幢2单元门', 4.88],
+		                ['2幢1单元门', 4.56],
+		                ['2幢2单元门', 3.76],
+		                ['3幢1单元门', 5.43],
+		                ['3幢2单元门', 4.21]
+		            ]
+		        }, {
+		            name: '二维码识别',
+		            id: 'code',
+		            data: [
+		                ['正大门', 6.49],
+		                ['南大门', 5.08],
+		                ['西大门', 3.89],
+		                ['北大门', 5.78],
+		                ['1幢1单元门', 2.71],
+		                ['1幢2单元门', 1.23],
+		                ['2幢1单元门', 1.78],
+		                ['2幢2单元门', 2.01],
+		                ['3幢1单元门', 1.26],
+		                ['3幢2单元门', 1.00]
+		            ]
+		        }, {
+		            name: '工作人员协助',
+		            id: 'help',
+		            data: [
+		                ['正大门', 0.27],
+		                ['南大门', 0.17],
+		                ['西大门', 0.20],
+		                ['北大门', 0.30],
+		                ['1幢1单元门', 0.07],
+		                ['1幢2单元门', 0.04],
+		                ['2幢1单元门', 0.05],
+		                ['2幢2单元门', 0.10],
+		                ['3幢1单元门', 0.03],
+		                ['3幢2单元门', 0.01]
+		            ]
+		        }, {
+		            name: 'Safari',
+		            id: 'Safari',
+		            data: [
+		                ['v8.0', 2.56],
+		                ['v7.1', 0.77],
+		                ['v5.1', 0.42],
+		                ['v5.0', 0.3],
+		                ['v6.1', 0.29],
+		                ['v7.0', 0.26],
+		                ['v6.2', 0.17]
+		            ]
+		        }, {
+		            name: 'Opera',
+		            id: 'Opera',
+		            data: [
+		                ['v12.x', 0.34],
+		                ['v28', 0.24],
+		                ['v27', 0.17],
+		                ['v29', 0.16]
+		            ]
+		        }]
+		    }
+		});
+		
+	});
+</script>
+<script>
+$("#graph").click(function(){
+	$("#hint1").hide();
+	$("#hint3").show();
+	$("#hint4").hide();
+	var chart = Highcharts.chart('dashboard-graph', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: '小区并发数统计与时间分布'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: ['00：00', '02：00', '04：00', '06：00', '08：00', '10：00', '12：00', '14：00', '16：00', '18：00', '20：00','22：00']
+    },
+    yAxis: {
+        title: {
+            text: '并发数'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true          // 开启数据标签
+            }
+        }
+    },
+    series: [{
+    	name: '开门人数',
+        data: [1, 1, 3, 4, 10, 8, 10, 9, 7, 10, 5, 6]
+    }]
+});
+});
+
+</script>
+<script type="text/javascript">
+$("#servers").click(function(){
+	$("#hint1").hide();
+	$("#hint3").hide();
+	$("#hint4").show();
+$('#dashboard-servers').highcharts({
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '各门禁人脸识别所需时间统计'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: [
+            '正大门',
+            '南大门',
+            '西大门',
+            '北大门',
+            '1幢1单元门',
+            '1幢2单元门',
+            '2幢1单元门',
+            '2幢2单元门',
+            '3幢1单元门',
+            '3幢2单元门'
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: '平均识别时间(s)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.2f} s</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: '最快',
+        data: [0.17, 0.21, 0.15, 0.19, 0.09, 0.10, 0.04, 0.11, 0.08, 0.05]
+    }, {
+        name: '平均',
+        data: [0.25, 0.35, 0.31, 0.22, 0.14, 0.17, 0.16, 0.21, 0.13, 0.11]
+    }, {
+        name: '最慢',
+        data: [0.33, 0.51, 0.46, 0.37, 0.24, 0.21, 0.35, 0.39, 0.29, 0.20]
+    }]
+});
+});
+
+</script>

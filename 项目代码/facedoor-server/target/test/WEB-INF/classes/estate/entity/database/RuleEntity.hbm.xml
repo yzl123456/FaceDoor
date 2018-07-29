@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.RuleEntity" table="rule" schema="" catalog="PropertySystem">
+        <id name="ruleId">
+            <column name="rule_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <property name="unitPrice">
+            <column name="unit_price" sql-type="decimal" precision="11" scale="2"/>
+        </property>
+        <property name="unit">
+            <column name="unit" sql-type="varchar" length="10"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar" length="100"/>
+        </property>
+        <property name="overdueUnitPrice">
+            <column name="overdue_unit_price" sql-type="decimal" precision="11" scale="2"/>
+        </property>
+        <property name="overdueUnit">
+            <column name="overdue_unit" sql-type="varchar" length="10"/>
+        </property>
+        <property name="startTime">
+            <column name="start_time" sql-type="bigint"/>
+        </property>
+        <property name="endTime">
+            <column name="end_time" sql-type="bigint"/>
+        </property>
+    </class>
+</hibernate-mapping>

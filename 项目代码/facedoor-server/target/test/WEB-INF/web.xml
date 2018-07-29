@@ -1,0 +1,101 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+<welcome-file-list>  
+    <welcome-file>/welcome.jsp</welcome-file>  
+</welcome-file-list>  
+    <!-- 加载spring上下文配置文件 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:config/applicationContext*.xml
+            <!--classpath:config/spring-security.xml-->
+        </param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- 将网站根目录写入系统属性 -->
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>WEB.ROOT</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+    </listener>
+
+
+
+    <!-- 配置spring拦截器 -->
+    <servlet>
+        <servlet-name>estateOA</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:config/spring-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>estateOA</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- 将url请求会话和hibernate会话绑定在一起,使得spring对hibernate可以进行事务管理 -->
+    <filter>
+        <filter-name>openSession</filter-name>
+        <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>openSession</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>springUtf8Encoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>springUtf8Encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>appValidate</filter-name>
+        <filter-class>estate.filter.app.AppFilterMain</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>appValidate</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>webValidate</filter-name>
+        <filter-class>estate.filter.web.WebFilterMain</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>webValidate</filter-name>
+        <url-pattern>/view/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>webValidate</filter-name>
+        <url-pattern>/web/*</url-pattern>
+    </filter-mapping>
+</web-app>

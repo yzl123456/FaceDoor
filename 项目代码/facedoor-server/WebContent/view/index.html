@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>FaceDoor——智慧人脸门禁系统</title>
+		<meta name="description" content="description">
+		<meta name="author" content="kangbiao">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="plugins/bootstrap/bootstrap.css" rel="stylesheet">
+		<link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+		<link href="css/font-awesome.css" rel="stylesheet">
+		<!--<link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>-->
+		<link href="plugins/fancybox/jquery.fancybox.css" rel="stylesheet">
+		<link href="plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
+		<link href="plugins/xcharts/xcharts.min.css" rel="stylesheet">
+		<link href="plugins/select2/select2.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+				<script src="http://getbootstrap.com/docs-assets/js/html5shiv.js"></script>
+				<script src="http://getbootstrap.com/docs-assets/js/respond.min.js"></script>
+		<![endif]-->
+		<!--<style>-->
+			<!--tr td,tr th-->
+			<!--{-->
+				<!--text-align: center;-->
+			<!--}-->
+		<!--</style>-->
+	</head>
+<body>
+<!--Start Header-->
+<div id="screensaver">
+	<canvas id="canvas"></canvas>
+	<i class="fa fa-lock" id="screen_unlock"></i>
+</div>
+<div id="modalbox">
+	<div class="devoops-modal">
+		<div class="devoops-modal-header">
+			<div class="modal-header-name">
+				<span>Basic table</span>
+			</div>
+			<div class="box-icons">
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="devoops-modal-inner">
+		</div>
+		<div class="devoops-modal-bottom">
+		</div>
+	</div>
+</div>
+<header class="navbar">
+	<div class="container-fluid expanded-panel">
+		<div class="row">
+			<div id="logo" class="col-xs-12 col-sm-2">
+				<a href="index.html"><img src="img/faceLogo.png" height="40"/>FaceDoor</a>
+			</div>
+			<div id="top-panel" class="col-xs-12 col-sm-10">
+				<div class="row">
+					<div class="col-xs-1 col-sm-1">
+						<a href="#" class="show-sidebar">
+						  <i class="fa fa-bars"></i>
+						</a>
+					</div>
+                    <div class="col-xs-8 col-sm-5 top-panel-right">
+                        <label for="villageTopList">当前园区:</label>
+                        <select class="select" style="width: 200px;" id="villageTopList">
+                        </select>
+                    </div>
+					<div class="col-xs-3 col-sm-6 top-panel-right">
+						<ul class="nav navbar-nav pull-right panel-menu">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
+									<div class="avatar">
+										<img src="img/avatar.jpg" class="img-rounded" alt="avatar" />
+									</div>
+									<i class="fa fa-angle-down pull-right"></i>
+									<div class="user-mini pull-right">
+										<span class="welcome">欢迎您,</span>
+										<span>yzl</span>
+									</div>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="#">
+											<i class="fa fa-user"></i>
+											<span>个人资料</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="fa fa-cog"></i>
+											<span>个人设置</span>
+										</a>
+									</li>
+									<li>
+										<a href="login.html">
+											<i class="fa fa-power-off"></i>
+											<span>登出</span>
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<!--End Header-->
+<!--Start Container-->
+<div id="main" class="container-fluid">
+	<div class="row">
+		<div id="sidebar-left" class="col-xs-2 col-sm-2">
+			<ul class="nav main-menu">
+				<li>
+					<a href="ajax/dashboard.html" class="active ajax-link">
+						<i class="fa fa-dashboard"></i>
+						<span class="hidden-xs"><font size="4">数据统计</font></span>
+					</a>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs"><font size="4">用户管理</font></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/ownerVerifyList.html">业主审核</a></li>
+						<li><a class="ajax-link" href="ajax/ownerList.html">业主信息</a></li>
+						<li><a class="ajax-link" href="ajax/guestList.html">访客信息</a></li>
+						<li><a class="ajax-link" href="ajax/workerList.html">工作人员信息</a></li>
+						<li><a class="ajax-link" href="ajax/otherList.html">其他人员信息</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-unlock-alt"></i>
+						<span class="hidden-xs"><font size="4">安全管理</font></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/doorRecordList.html">门禁进出记录</a></li>
+						<li><a class="ajax-link" href="ajax/doorList.html">门禁权限设定</a></li>
+						<li><a class="ajax-link" href="ajax/blackManList.html">黑名单</a></li>
+						<li><a class="ajax-link" href="ajax/suspecter.html">可疑人员</a></li>
+					</ul>
+				</li>				
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-home"></i>
+						 <span class="hidden-xs"><font size="4">物业管理</font></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a>楼房信息</a></li>
+						<li><a>车位信息</a></li>
+						<li><a>车位租赁</a></li>
+						<li><a>报事报修</a></li>
+						<li><a>家政服务</a></li>
+						<li><a>合作商家</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-cny"></i>
+						<span class="hidden-xs"><font size="4">财务管理</font></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a>收费管理</a></li>
+						<li><a>账单管理</a></li>
+						<li><a>退款管理</a></li>
+						<li><a>欠费管理</a></li>
+					</ul>
+				</li>				
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-bullhorn"></i>
+						<span class="hidden-xs"><font size="4">社区活动管理</font></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a>公告发布</a></li>
+						<li><a>活动发布</a></li>
+						<li><a>投诉咨询</a></li>
+					</ul>
+				</li>
+				<!-- 
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-wrench"></i>
+						<span class="hidden-xs"><font size="5">投诉报修</font></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="ajax/complain.html">投诉</a></li>
+						<li><a class="ajax-link" href="ajax/repair.html">报修</a></li>
+					</ul>
+				</li>
+				 -->
+			</ul>
+		</div>
+		<!--Start Content-->
+		<div id="content" style="position: absolute;right: 0px" class="col-xs-12 col-sm-10">
+			<div class="preloader">
+				<img src="img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
+			</div>
+			<div id="ajax-content"></div>
+		</div>
+		<!--End Content-->
+	</div>
+</div>
+<!--End Container-->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!--<script src="http://code.jquery.com/jquery.js"></script>-->
+<script src="plugins/jquery/jquery-2.1.0.min.js"></script>
+<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="plugins/bootstrap/bootstrap.min.js"></script>
+<script src="plugins/justified-gallery/jquery.justifiedgallery.min.js"></script>
+<script src="plugins/tinymce/tinymce.min.js"></script>
+<script src="plugins/tinymce/jquery.tinymce.min.js"></script>
+<!-- All functions for this theme + document.ready processing -->
+<script src="plugins/highcharts/highcharts.js"></script>
+<script src="plugins/modules/drilldown.js"></script>
+
+<script src="js/config.js"></script>
+
+<script src="js/devoops.js"></script>
+<script type="text/javascript">
+    $("#villageTopList").change(function(){
+        var villageID=$("#villageTopList option:selected").val();
+        if(villageID=="")
+            alert("未能获取正确的园区信息");
+        setCookie("villageID",villageID,10);
+        $.ajax({
+            type: "get",
+            async: true,
+            url: urlConfig.setVillageIDCookie+villageID,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+            },
+            error: function () {
+            }
+        });
+    });
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    $(document).ready(function() {
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.getVillageSelect2,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    var options="";
+                    for(var i in result.jsonString)
+                    {
+                        options+="<option value='"+result.jsonString[i].id+"'>"+result.jsonString[i].text+"</option>";
+                    }
+                    $("#villageTopList").append(options);
+                }
+                else
+                {
+                    $("#villageTopList").append('<option value="">获取园区信息失败</option>');
+                }
+            },
+            error: function () {
+                $("#villageTopList").append('<option value="">获取园区信息失败</option>');
+            }
+        });
+    });
+</script>
+</body>
+</html>

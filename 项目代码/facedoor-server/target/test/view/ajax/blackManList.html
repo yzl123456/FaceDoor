@@ -1,0 +1,472 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">安全管理</a></li>
+            <li><a href="#">黑名单</a></li>
+        </ol>
+    </div>
+</div>
+<div>
+    <input type="file" id="btn_import" style="display:none">
+	<img src="img/import.png" id="import">
+    <input type="file" id="btn_export" style="display:none">
+	<img src="img/export.png" id="export">
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <!--<button id="addOwnerBtn" class="btn btn-info">添加业主</button>-->
+                </div>
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="ownerListTable">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>证件类型</th>
+                        <th>证件号码</th>
+                        <th>信息来源</th>
+                        <th>人脸信息</th>
+                        <th>详细信息</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>证件类型</th>
+                        <th>证件号码</th>
+                        <th>信息来源</th>
+                        <th>人脸信息</th>
+                        <th>详细信息</th>
+                        <th>操作</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="formModel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12" id="ownerInfo">
+ 					
+                            <table>
+                            	<tbody>
+                            		<tr>
+                            			<td width="90%">
+                            				
+				                            <ul class="list-group">
+				                                <li class="list-group-item"><b>姓名:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="name"></span></li>
+				                                <li class="list-group-item"><b>性别:</b>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="sex"></span></li>
+				                                <li class="list-group-item"><b>联系方式:</b>&nbsp; <span id="phone"></span></li>
+				                                <li class="list-group-item"><b>证件类型:</b> &nbsp;<span id="identityType"></span></li>
+				                                <li class="list-group-item"><b>证件号码:</b> &nbsp;<span id="identityCode"></span></li>
+				                            </ul>                            				
+                            			</td>
+                            			<td>
+                            				<img id="face" src="img/face/owner/1.jpg" height="270"/>
+                            			</td>
+                            		</tr>
+                            	</tbody>
+                            </table>
+								
+
+                        </div>
+                    </div>
+                    
+                                  
+                </div>
+                
+<div class="row">
+                        <div class="col-md-12" id="doorRecordList">
+                            <ul class="list-group">
+								<li class="list-group-item">
+	 								<table class="table table-bordered">
+									  <caption><font size="4sp">备注</font></caption>
+
+									  <tbody >
+									    <tr>
+									      <td>2018-2-4，多次破坏小区公共设施。</td>
+									    </tr>
+									    <tr>
+									      <td>2018-2-7，多次徘徊于小区单元门口，对业主进出造成不便。</td>
+									    </tr>
+									    <tr>
+									      <td>2018-3-23，大喊大叫，打扰业主休息。</td>
+									    </tr>
+
+									
+									  </tbody>
+									</table>   
+								</li>                            	
+                            </ul>
+                        </div>
+                    </div>            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" role="dialog" id="editOwnerModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <form id="ownerEditForm" method="post" action="" class="form-horizontal">
+                            <fieldset>
+                                <legend>基本信息</legend>
+                                <input type="hidden" id="editOwnerID" name="ID">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">姓名</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="name" id="name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">性别</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="sex" id="sex">
+                                            <option value="1">男</option>
+                                            <option value="2">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">电话号码</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="phone" id="phone"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">证件类型</label>
+                                    <div class="col-sm-6">
+                                        <select name="identityType" class="form-control" id="identityType">
+                                            <option value="1">身份证</option>
+                                            <option value="2">护照</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">证件号码</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="identityCode" id="identityCode"/>
+                                    </div>
+                                </div>
+                                <!-- 
+                                <div class="form-group has-feedback">
+                                    <label class="col-sm-3 control-label">入住时间</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="authTime" name="authTime" id="authTime"
+                                               class="form-control input_date" placeholder="">
+                                    </div>
+                                </div>
+                                 -->
+                            </fieldset>
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-3">
+                                    <button type="submit" class="btn btn-primary" id="editOwner">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+
+
+<script type="text/javascript">
+    var editTable;//全局的datatable变量
+    $("#import").click(function(){
+    	$("#btn_import").click();
+    });
+    $("#export").click(function(){
+    	$("#btn_export").click();
+    });
+    
+    $("#editOwner").click(function(){
+
+        var data=$("#ownerEditForm").serializeArray();
+        $.ajax({
+            type: "post",
+            async: false,
+            data:data,
+            url: urlConfig.editOwnerByID,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+				alert("修改成功!");
+		        $("#editOwnerModal").modal("hide");
+                editTable.ajax.reload( null, false );
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+        return false;
+    });
+    
+    $('#ownerListTable tbody').on( 'click', 'button#delRow', function () {
+        var comfirm=confirm("确定删除?");
+        if(comfirm)
+        {
+            var data = editTable.row($(this).parents('tr') ).data();
+            $.ajax({
+                type: "get",
+                async: false,
+                url: urlConfig.deleteOwnerByPhone+data.phone,
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        alert("删除成功");
+                        editTable.ajax.reload( null, false );
+                    }
+                    else
+                    {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
+        }
+    });
+
+
+    //显示业主的个人信息和房产信息
+    $('#ownerListTable').on( 'click', 'button#detailRow', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        console.log(data);
+
+        $("#ownerInfo #name").text(data.name);
+        $("#ownerInfo #identityType").text(data.identityType);
+        $("#ownerInfo #identityCode").text(data.identityCode);
+        $("#ownerInfo #identityType").text(data.identityType);
+        $("#ownerInfo #phone").text(data.phone);
+        $("#ownerInfo #sex").text(data.sex);
+        $("#ownerInfo img").attr("src","img/face/blackman/"+data.faceURL);
+        $("#ownerInfo #family1").attr("src","img//face//owner//family//family1"+data.ownerId+".jpg");
+        $("#ownerInfo #family2").attr("src","img//face//owner//family//family2"+data.ownerId+".jpg");
+
+        $("#formModel").modal("show");//弹出框show
+    });
+    
+    $('#ownerListTable').on( 'click', 'button#editRow', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        
+        $("#ownerEditForm #name").val(data.name);
+        $("#ownerEditForm #phone").val(data.phone);
+        $("#ownerEditForm #identityCode").val(data.identityCode);
+        $("#ownerEditForm #identityType").val(data.identityType);
+        if(data.identityType=='身份证'){
+            $("#ownerEditForm #identityType").val(1);
+    	}	
+        else
+        	$("#ownerEditForm #identityType").val(2);
+        if(data.sex=="男")
+            $("#ownerEditForm #sex").val(1);
+        else
+            $("#ownerEditForm #sex").val(2);
+        $("#ownerEditForm #editOwnerID").val(data.ownerId);
+        
+       
+
+        $("#editOwnerModal").modal("show");
+    });
+
+    $('#ownerListTable').on( 'click', 'button#visit', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        $("#visitLabel").text('关联访客('+data.name+')');
+
+        if(data.identityType=='身份证'){
+            $("#ownerEditForm #identityType").val(1);
+    	}	
+        else
+        	$("#ownerEditForm #identityType").val(2);
+        if(data.sex=="男")
+            $("#ownerEditForm #sex").val(1);
+        else
+            $("#ownerEditForm #sex").val(2);
+        $("#ownerEditForm #editOwnerID").val(data.ownerId);
+       
+
+        $("#visitModal").modal("show");
+    });
+    
+    
+    //初始化表格数据
+    function initDataTable(){
+        editTable=$('#ownerListTable').DataTable({
+            "processing":true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.blackManList,
+                "dataSrc": "jsonString"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "data":null,
+                "orderable": false,
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
+            },{
+                "targets": 1,
+                "data": "name",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 2,
+                "data": "sex",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 3,
+                "data": "phone",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 4,
+                "data": "identityType",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 5,
+                "data": "identityCode",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 6,
+                "data": "infoSource",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 7,
+                "data": "faceURL",
+                "visible": true,
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, full, meta ) {  
+                	//return data;
+                	return "<img src='"+"img/face/blackman/"+data+"'/>";
+                    //return '<img id="preview"  name=“faceURL” height=“100” src=“'+data+'”/>‘;
+                }
+            },{
+                "targets": 8,
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>&ensp;"
+                      
+            },{
+                "targets": 9,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='editRow' class='btn btn-primary' type='button'>编辑</button>&ensp;" +
+                        "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
+            },{
+                "targets": 10,//删除
+                "data": "manId",
+                "visible": false,
+                "orderable": false,
+                "searchable": false,
+            }
+            ],
+            "aaSorting": [[ 0, "asc" ]],
+            "autoWidth":false,
+            "sDom":
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+            "language": {
+                "emptyTable":     "没有相关数据",
+                "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
+                "infoEmpty":      "没有相关数据",
+                "infoFiltered":   "(筛选自 _MAX_ 条记录)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "每页显示 _MENU_ 条",
+                "loadingRecords": "加载中",
+                "processing":     "数据处理中",
+                "search":         "搜索:",
+                "zeroRecords":    "没有找到匹配数据",
+                "paginate": {
+                    "first":      "首页",
+                    "last":       "末页",
+                    "next":       "下一页",
+                    "previous":   "上一页"
+                },
+                "aria": {
+                    "sortAscending":  ":正序",
+                    "sortDescending": ":倒序"
+                }
+            }
+        });
+
+
+    }
+
+    $(document).ready(function() {
+        LoadDataTablesScripts(initDataTable);
+    });
+</script>

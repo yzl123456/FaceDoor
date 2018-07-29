@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/write" >
+
+    <LinearLayout
+        android:id="@+id/ll_upload_picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/rl_shoot_upload_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:background="@drawable/relative_layout_background" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                 >
+
+                <ImageView
+                    android:id="@+id/iv_shoot_upload_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:src="@drawable/shoot" />
+
+                <TextView
+                    android:id="@+id/tv_shoot_upload_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toRightOf="@id/iv_shoot_upload_picture"
+                    android:text="@string/camera"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:src="@drawable/spilt_line_vertical"
+            android:scaleType="fitXY"
+            android:layout_alignParentTop="true"/>
+
+        <RelativeLayout
+            android:id="@+id/ll_album_upload_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:background="@drawable/relative_layout_background" >
+
+            <ImageView
+                android:id="@+id/iv_album_upload_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:src="@drawable/album" />
+
+            <TextView
+                android:id="@+id/tv_album_upload_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/iv_album_upload_picture"
+                android:text="@string/album"
+                android:textSize="20sp"/>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

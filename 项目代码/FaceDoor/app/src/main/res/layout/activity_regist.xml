@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- 标题栏 -->
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/write" >
+
+        <!--返回按钮layout-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="left|center_vertical" >
+
+            <ImageButton
+                android:id="@+id/zuce_back"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:padding="14dp"
+                android:background="@color/write"
+                android:scaleType="fitCenter"
+                android:src="@drawable/goback1" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="注册"
+            android:textColor="@color/style"
+
+            android:textSize="18sp" />
+    </RelativeLayout>
+    
+    <!-- 标题图片 -->
+    <RelativeLayout
+        android:id="@+id/zhuce_theme"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:background="@color/write"
+        android:gravity="center" 
+        android:layout_below="@id/rl_title">
+
+        <ImageView
+            android:id="@+id/zhuce_themepic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:scaleType="fitCenter"/>
+        <!--android:background="@drawable/zhuce_title" -->
+    </RelativeLayout>
+        
+    <!-- 填写信息 -->
+    <RelativeLayout 
+        android:id="@+id/rl_content_setpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="65dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/zhuce_theme"
+        >
+    
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        
+        <TableRow
+            >
+
+            <EditText
+                android:layout_marginLeft="5dp"
+                android:id="@+id/phone"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:layout_span="2"
+                android:imeOptions="actionNext"
+                android:gravity="center"
+                android:hint="手机号"
+                android:background="@drawable/bg_edittext_selector"
+                android:inputType="phone" />
+        </TableRow>
+        
+        <TableRow 
+            android:paddingTop="15dp">
+
+            <EditText
+                android:layout_marginLeft="5dp"
+                android:id="@+id/shuru_yzm"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:ems="6"
+                android:imeOptions="actionDone"
+                android:background="@drawable/bg_edittext_selector"
+                android:singleLine="true"
+                android:hint="验证码" />
+
+            <TextView
+
+                android:id="@+id/send_mess"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="获取验证码"
+                android:textColor="@color/style" 
+                android:textSize="17sp"/>
+        </TableRow>
+        <TableRow
+            android:paddingTop="15dp">
+
+            <EditText
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/pwd_et"
+                android:layout_height="40dp"
+                android:ems="10"
+                android:layout_span="2"
+                android:imeOptions="actionNext"
+                android:hint="密码"
+                android:background="@drawable/bg_edittext_selector"
+                android:inputType="textPassword" />
+        </TableRow>
+
+    </TableLayout>
+    
+    </RelativeLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_below="@id/rl_content_setpassword"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical" >
+    
+            <Button
+                android:id="@+id/zuce_ensure"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/fillet_button"
+                android:text="完成"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+</RelativeLayout>

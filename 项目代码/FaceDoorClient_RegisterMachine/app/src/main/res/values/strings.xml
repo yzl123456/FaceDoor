@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">sdk_demo</string>
+    <string-array name="home_address_1">
+        <item>1幢</item>
+        <item>2幢</item>
+        <item>3幢</item>
+    </string-array>
+    <string-array name="home_address_2">
+        <item>1单元</item>
+        <item>2单元</item>
+        <item>3单元</item>
+    </string-array>
+    <string-array name="home_address_3">
+        <item>1层</item>
+        <item>2层</item>
+        <item>3层</item>
+    </string-array>
+    <string-array name="home_address_4">
+        <item>101</item>
+        <item>102</item>
+        <item>201</item>
+        <item>202</item>
+    </string-array>
+    <string-array name="man_type">
+        <item>外卖员</item>
+        <item>快递员</item>
+        <item>装修人员</item>
+        <item>邮递员</item>
+        <item>牛奶工</item>
+        <item>其他</item>
+    </string-array>
+
+
+</resources>

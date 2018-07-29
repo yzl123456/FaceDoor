@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.ParklotOwnerInfoEntity" table="parklot_owner_info" schema=""
+           catalog="PropertySystem">
+        <id name="id">
+            <column name="poi_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <property name="plId">
+            <column name="pl_id" sql-type="int unsigned"/>
+        </property>
+        <property name="ownerPhone">
+            <column name="owner_phone" sql-type="varchar" length="15"/>
+        </property>
+        <property name="ownerType">
+            <column name="owner_type" sql-type="tinyint"/>
+        </property>
+        <property name="brakeId">
+            <column name="brake_id" sql-type="int unsigned"/>
+        </property>
+        <property name="enterBrakeAllowed">
+            <column name="enter_brake_allowed" sql-type="tinyint"/>
+        </property>
+        <many-to-one name="parkingLotEntity" insert="false" update="false" lazy="false"
+                     class="estate.entity.database.ParkingLotEntity">
+            <column name="pl_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

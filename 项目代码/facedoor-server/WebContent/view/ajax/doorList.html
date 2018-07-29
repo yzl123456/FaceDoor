@@ -1,0 +1,541 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/list-style.css">
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">安全管理</a></li>
+            <li><a href="#">门禁权限设定</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <!--<button id="addOwnerBtn" class="btn btn-info">添加业主</button>-->
+                </div>
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="ownerListTable">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>门禁地点</th>
+                        <th>访问记录自动清理</th>
+                        <th>允许访问人员</th>
+                        <th>门禁分级</th>
+                        <th>状态</th>
+                        <th>门禁开关</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>序号</th>
+                        <th>门禁地点</th>
+                        <th>访问记录自动清理</th>
+                        <th>允许访问人员</th>
+                        <th>门禁分级</th>
+                        <th>状态</th>
+                        <th>门禁开关</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- 门禁信息 -->
+<div class="modal fade" role="dialog" id="doorLimitModal">
+    <div class="modal-dialog modal-lg" role="document" style="width:500px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="doorName">门禁分级</h4>
+            </div>
+            <div class="modal-body" id="selectTitle">
+					<tr>
+						<td>&nbsp;</td>
+						<td >禁止通过</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td>允许通过</td>
+					</tr>
+			<div class="list-body">
+				<input type="hidden" id="doorId">
+				<div class="item-box left-box" id="leftBox">
+					<!-- 左边框初始化待选项 -->
+
+				</div>
+				<div class="center-box">
+					<button class="add-one" title="添加选中项">></button>
+					<button class="add-all" title="添加全部">>></button>
+					<button class="remove-one" title="移除选中项"><</button>
+					<button class="remove-all" title="移除全部"><<</button>
+				</div>
+			
+				<div class="item-box right-box" id="rightBox">
+					<!-- 右边框存放已选项 -->
+					<span class="item" data-id="owner">业主</span>
+					<span class="item" data-id="guest">访客</span>
+					<span class="item" data-id="worker">工作人员</span>
+					<span class="item" data-id="other">其他人员</span>
+				</div>
+			</div>
+			<div class="list-footer">
+				<button class="selected-val" title="获取选择值，输出到控制台">保存</button>
+			</div>
+			
+		</div>
+		</div>
+<!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+(function($){
+	$.fn.initList = function(){
+		var selectTitle = $(this);
+		selectTitle.draggable({handle:'.list-title'}); // 添加拖拽事件
+
+		/**
+		 * 单击列表单击: 改变样式
+		 */
+		var itemClickHandler = function(){
+			$(this).parent('.item-box').find('.item').removeClass('selected-item');
+			$(this).addClass('selected-item');
+		}
+
+		/**
+		 * 左边列表项移至右边
+		 */
+		var leftMoveRight = function(){
+			selectTitle.find('.list-body .right-box').append($(this).removeClass('selected-item'));
+			initItemEvent();
+		}
+
+		/**
+		 * 右边列表项移至左边
+		 */
+		var rightMoveLeft = function(){
+			selectTitle.find('.list-body .left-box').append($(this).removeClass('selected-item'));
+			initItemEvent();
+		}
+
+		/**
+		 * 初始化列表项选择事件
+		 */
+		function initItemEvent(){
+			// 左边列表项单击、双击事件
+			selectTitle.find('.list-body .left-box').find('.item').unbind('click');
+			selectTitle.find('.list-body .left-box').find('.item').unbind('dblclick');
+			selectTitle.find('.list-body .left-box').find('.item').each(function(){
+				$(this).on("click", itemClickHandler);
+				$(this).on('dblclick', leftMoveRight);
+			});
+
+			// 右边列表项单击、双击事件
+			selectTitle.find('.list-body .right-box').find('.item').unbind('click');
+			selectTitle.find('.list-body .right-box').find('.item').unbind('dblclick');
+			selectTitle.find('.list-body .right-box').find('.item').each(function(){
+				$(this).on('click', itemClickHandler);
+				$(this).on('dblclick', rightMoveLeft);
+			});
+		}
+
+
+		/**
+		 * 初始化添加、移除、获取值按钮事件
+		 */
+		function initBtnEvent(){
+			var btnBox = selectTitle.find('.list-body .center-box');
+			var leftBox = selectTitle.find('.list-body .left-box');
+			var rightBox = selectTitle.find('.list-body .right-box');
+
+			// 添加一项
+			btnBox.find('.add-one').on('click', function(){
+				leftBox.find('.selected-item').trigger('dblclick'); // 触发双击事件
+			});
+			// 添加所有项
+			btnBox.find('.add-all').on('click', function(){
+				leftBox.find('.item').trigger('dblclick');
+			});
+			// 移除一项
+			btnBox.find('.remove-one').on('click', function(){
+				rightBox.find('.selected-item').trigger('dblclick'); // 触发双击事件
+			});
+			// 移除所有项
+			btnBox.find('.remove-all').on('click', function(){
+				rightBox.find('.item').trigger('dblclick');
+			});
+
+			//selectTitle.find('.list-footer').find('.selected-val').on('click',getSelectedValue);
+		}
+
+		initItemEvent();
+		initBtnEvent();
+	}
+})($)
+</script>
+
+<script type="text/javascript">
+    var editTable;//全局的datatable变量
+	var selectTitle = $("#selectTitle");
+
+    
+
+
+    
+
+    $('#ownerListTable tbody').on( 'click', 'button#changeStatus', function () {
+        var status=$(this).attr("status");
+        var comfirm;
+        if(status=="enable")
+            comfirm=confirm("确定恢复该门禁?");
+        else if(status=="disable")
+            comfirm=confirm("确定停用该门禁?");
+        else
+            comfirm=confirm("确定同意该用户的绑定请求?");
+        if(comfirm)
+        {	
+
+            var data = editTable.row($(this).parents('tr') ).data();
+            $.ajax({
+                type: "post",
+                async: false,
+                url: urlConfig.changeDoorStatus,
+                data: {
+                	doorId:data.doorId,
+                    status:status
+                },
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        editTable.ajax.reload( null, false );
+                    }
+                    else
+                    {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
+
+        }
+    });
+    
+    $('#ownerListTable tbody').on( 'click', 'button#doorLimit', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+		console.log($("#leftBox").html());
+		console.log($("#rightBox").html());
+		$("#doorId").val(data.doorId);
+        $.ajax({
+            type: "post",
+            async: false,
+            url: urlConfig.doorManLimit,
+            data: {
+            	doorId:data.doorId,
+            },
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+            	console.log(result.jsonString);
+                if(result.jsonString!=null)
+                {	
+                	$("#doorName").text("门禁分级（"+result.jsonString.location+"）");
+                	
+                	$("#leftBox").html("");
+                    $("#rightBox").html("");
+                    var lefthtml="";
+                    var righthtml="";
+					//<span class="item" data-id="owner">业主</span>
+					var map = {};
+					map['allowOwner'] = '业主';
+					map['allowGuest'] = '访客';
+					map['allowWorker'] = '工作人员';
+					map['allowOther'] = '其他人员';
+					//alert(map['allowOwner']);
+                    for (var i in result.jsonString)
+                    {	
+                    	if(map[i]){
+	                    	//alert(map[i]);
+							//alert(i);	                    
+	                    	if(result.jsonString[i]=='0'){
+	                    		lefthtml+='<span class="item" data-id='+i+'>'+map[i]+'</span>';
+	                    	}
+	                    	else{
+	                    		righthtml+='<span class="item" data-id='+i+'>'+map[i]+'</span>';
+	                    	}
+                  		 }
+                    }
+                    $("#leftBox").html(lefthtml);
+                    $("#rightBox").html(righthtml);
+                    $('#selectTitle').initList();
+                }
+                
+                
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+        
+        
+        $("#doorLimitModal").modal("show");
+    });
+
+	/**
+	 * 获取选择的值
+	 * @return json数组
+	 */
+    selectTitle.find('.list-footer').find('.selected-val').on('click',function(){
+		var rightBox = selectTitle.find('.list-body .right-box');
+		var itemValues = [];
+		var itemValue;
+		var data = {'allowOwner':"0",'allowGuest':"0",'allowWorker':"0","allowOther":"0"};
+		rightBox.find('.item').each(function(){
+			itemValue = {};
+			itemValue[$(this).attr('data-id')] = $(this).text();
+			//console.log($(this).attr('data-id'));
+			data[$(this).attr('data-id')]="1";
+			itemValues.push(itemValue);
+		});
+		console.log(data);
+		//发送ajax
+        $.ajax({
+            type: "post",
+            async: false,
+            url: urlConfig.changeManLimit,
+            data: {
+            	doorId:$("#doorId").val(),
+                data:JSON.stringify(data)
+            },
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                	alert("修改成功!");
+    		        $("#doorLimitModal").modal("hide");
+                    editTable.ajax.reload( null, false );
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+		
+		
+    	
+    	$('#doorLimitModal').modal('hide');
+    });
+    
+    
+    //初始化表格数据
+    function initDataTable(){
+        editTable=$('#ownerListTable').DataTable({
+            "processing":true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.doorList,
+                "dataSrc": "jsonString"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "data":null,
+                "orderable": false,
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
+            },{
+                "targets": 1,
+                "data": "location",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 2,
+                "data": "autoDelete",
+                "visible": true,
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, row ) {
+                    if (data=="1")
+                        return "<select><option value ='1'>3个月</option><option value ='2'>6个月</option></select>";
+                    else if(data=="2")
+                        return "<select><option value ='2'>6个月</option><option value ='1'>3个月</option></select>";
+
+                }
+
+            },{
+                "targets": 3,
+                "data": "totalLimit",
+                "visible": true,
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, row ) {
+                	var man="";
+                	var flag=0;
+                	if(data[0]=="1"){
+                		if(flag==1)
+                			man+="、业主";
+                		else
+                			man+="业主";
+                		flag=1;
+                	}
+                	if(data[1]=="1"){
+                		if(flag==1)
+                			man+="、访客";
+                		else
+                			man+="访客";
+                		flag=1;
+                	}                	
+                	if(data[2]=="1"){
+                		if(flag==1)
+                			man+="、工作人员";
+                		else
+                			man+="工作人员";
+                		flag=1;
+                	}
+                	
+                	if(data[3]=="1"){
+                		if(flag==1)
+                			man+="、其他人员";
+                		else
+                			man+="其他人员";
+                		flag=1;
+                	}                	
+					return man;
+                }
+
+            },{
+                "targets": 4,
+                "data": null,
+                "visible": true,
+                "orderable": false,
+                "searchable": true,
+                "defaultContent":
+                    "<button id='doorLimit' class='btn btn-primary' type='button'>人员设置</button>"
+
+            },{
+                "targets": 5,
+                "data": "status",
+                "visible": true,
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, row ) {
+                    if (data==1)
+                        return "正常";
+                    else if(data==0)
+                        return "<font color='red'>禁用</font>";
+                    else
+                        return "已删除";
+                }
+
+            },{
+                "targets": 6,
+                "data": "status",
+                "visible": true,
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, row ) {
+                    if(data==0)
+                        return "<button id='changeStatus' status='enable' class='btn btn-primary' type='button'>启用";
+                    else if(data==1)
+                        return "<button id='changeStatus' status='disable' class='btn btn-primary' type='button'>禁用" ;
+                    else
+                        return "<button id='changeStatus' status='enable' class='btn btn-primary' type='button'>启用" ;
+                }
+
+            },{
+                "targets": 7,//删除
+                "data": "allowOwner",
+                "visible": false,
+                "orderable": false,
+                "searchable": false,
+            },{
+                "targets": 8,//删除
+                "data": "allowGuest",
+                "visible": false,
+                "orderable": false,
+                "searchable": false,
+            },{
+                "targets": 9,//删除
+                "data": "allowWorker",
+                "visible": false,
+                "orderable": false,
+                "searchable": false,
+            },{
+                "targets": 10,//删除
+                "data": "allowOther",
+                "visible": false,
+                "orderable": false,
+                "searchable": false,
+            },{
+                "targets": 11,//删除
+                "data": "doorId",
+                "visible": false,
+                "orderable": false,
+                "searchable": false,
+            }
+            ],
+            "aaSorting": [[ 1, "asc" ]],
+            "autoWidth":false,
+            "sDom":
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+            "language": {
+                "emptyTable":     "没有相关数据",
+                "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
+                "infoEmpty":      "没有相关数据",
+                "infoFiltered":   "(筛选自 _MAX_ 条记录)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "每页显示 _MENU_ 条",
+                "loadingRecords": "加载中",
+                "processing":     "数据处理中",
+                "search":         "搜索:",
+                "zeroRecords":    "没有找到匹配数据",
+                "paginate": {
+                    "first":      "首页",
+                    "last":       "末页",
+                    "next":       "下一页",
+                    "previous":   "上一页"
+                },
+                "aria": {
+                    "sortAscending":  ":正序",
+                    "sortDescending": ":倒序"
+                }
+            }
+        });
+
+
+    }
+
+    $(document).ready(function() {
+		//$('#selectTitle').initList();
+        LoadDataTablesScripts(initDataTable);
+    });
+</script>

@@ -1,0 +1,138 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/list-style.css">
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">安全管理</a></li>
+            <li><a href="#">可疑人员</a></li>
+        </ol>
+    </div>
+</div>
+<table class="table table-bordered">
+
+  <tbody>
+    <tr>
+
+      <td align="center" id="man1">
+      	<font size="5sp">可疑人员1</font>	&nbsp;&nbsp;<font id="isTag1">未标记</font>
+      </td>
+
+      <td align="center">
+      	<font size="5sp">捕捉到次数:</font>
+      	<font color="red" size="5sp">5次</font>
+      </td>
+      <td></td>
+      <td></td>
+	  <td align="center">
+	  	<img alt="" src="img/tag.png" id="tag1">
+	  </td>      
+      
+    </tr>
+    
+    <tr>
+    	<td align="center">
+    		<img src="img/face/suspect/suspecter1.jpg" height="100"/><br>
+    		
+    		正大门<br>
+    		2018-3-23 8:50<br>
+    	</td>
+    	<td align="center">
+    		<img src="img/face/suspect/suspecter2.jpg" height="100"/><br>
+    		
+    		南大门<br>
+    		2018-3-23 9:00<br>
+    	</td>
+    	<td align="center">
+    		<img src="img/face/suspect/suspecter3.jpg" height="100"/><br>
+    		
+    		南大门<br>
+    		2018-3-23 10:50<br>
+    	</td>    	
+    	<td align="center">
+    		<img src="img/face/suspect/suspecter4.jpg" height="100"/><br>
+    		
+    		西大门<br>
+    		2018-3-23 11:00<br>
+    	</td>   
+    	<td align="center">
+    		<img src="img/face/suspect/suspecter5.jpg" height="100"/><br>
+    		
+    		西大门<br>
+    		2018-3-23 17:50<br>
+    	</td>   
+    </tr>
+    <tr>
+
+      <td align="center" id="man2">
+      	<font size="5sp">可疑人员2</font>	&nbsp;&nbsp;<font id="isTag2">未标记</font>
+      </td>
+
+      <td align="center">
+      	<font size="5sp">捕捉到次数:</font>
+      	<font color="red" size="5sp">3次</font>
+      </td>
+      <td></td>
+      <td></td>
+	  <td align="center">
+	  	<img alt="" src="img/tag.png" id="tag2">
+	  </td>      
+      
+    </tr>
+    
+    <tr>
+    	<td align="center">
+    		<img src="img/face/suspect/suspecter6.jpg" height="100"/><br>
+    		
+    		北大门<br>
+    		2018-3-23 8:50<br>
+    	</td>
+    	<td align="center">
+    		<img src="img/face/suspect/suspecter7.jpg" height="100"/><br>
+    		
+    		西大门<br>
+    		2018-3-23 9:00<br>
+    	</td>
+    	<td align="center">
+    		<img src="img/face/suspect/suspecter8.jpg" height="100"/><br>
+    		
+    		北大门<br>
+    		2018-3-23 10:50<br>
+    	</td>    	
+    	
+    </tr>
+
+  </tbody>
+</table>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+		//$('#selectTitle').initList();
+		$("#tag1").bind("click",function(){
+			var isTag1=$("#isTag1");
+			if(isTag1.html()=="未标记"){
+				isTag1.html("<font color='red'>已标记</font>");
+				$("#tag1").attr("src","img/cancelTag.png");
+			}
+			else{
+				isTag1.html("未标记");
+				$("#tag1").attr("src","img/tag.png");
+			}
+	
+		})
+		
+		$("#tag2").bind("click",function(){
+			var isTag2=$("#isTag2");
+			if(isTag2.html()=="未标记"){
+				isTag2.html("<font color='red'>已标记</font>");
+				$("#tag2").attr("src","img/cancelTag.png");
+			}
+			else{
+				isTag2.html("未标记");
+				$("#tag2").attr("src","img/tag.png");
+			}
+	
+		})
+    });
+</script>

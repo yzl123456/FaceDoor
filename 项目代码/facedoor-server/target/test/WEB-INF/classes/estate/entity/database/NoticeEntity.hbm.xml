@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.NoticeEntity" table="notice" schema="" catalog="PropertySystem">
+        <id name="id">
+            <column name="notice_id"  sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <property name="title">
+            <column name="title" sql-type="varchar" length="100"/>
+        </property>
+        <property name="content">
+            <column name="content" sql-type="text" length="65535"/>
+        </property>
+        <property name="time">
+            <column name="time" sql-type="bigint"/>
+        </property>
+        <property name="pictureIdList">
+            <column name="picture_id_list" sql-type="varchar" length="100"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar" length="100"/>
+        </property>
+        <property name="type">
+            <column name="type" sql-type="tinyint"/>
+        </property>
+        <property name="expiretime">
+            <column name="expiretime" sql-type="bigint"/>
+        </property>
+        <property name="cuId">
+            <column name="cu_id" sql-type="int unsigned"/>
+        </property>
+        <many-to-one name="consoleUserEntity" lazy="false" update="false" insert="false"
+                     class="estate.entity.database.ConsoleUserEntity">
+            <column name="cu_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

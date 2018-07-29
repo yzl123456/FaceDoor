@@ -1,0 +1,324 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">信息管理</a></li>
+            <li><a href="#">其他人员信息</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <!--<button id="addOwnerBtn" class="btn btn-info">添加业主</button>-->
+                </div>
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="ownerListTable">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>身份类型</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>所属公司</th>
+                        <th>有效期</th>
+                        <th>人脸</th>
+                        <th>详细信息</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>身份类型</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>所属公司</th>
+                        <th>有效期</th>
+                        <th>人脸</th>
+                        <th>详细信息</th>
+                        <th>操作</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="formModel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12" id="ownerInfo">
+ 					
+                            <table>
+                            	<tbody>
+                            		<tr>
+                            			<td width="100%">
+				                            <ul class="list-group">
+				                                <li class="list-group-item"><b>姓名:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="name"></span></li>
+				                                <li class="list-group-item"><b>性别:</b>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="sex"></span></li>
+				                                <li class="list-group-item"><b>园区名:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span >斯卡小区</span></li>
+				                                <li class="list-group-item"><b>有效期:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span id="validTime"></span></li>
+				                                <li class="list-group-item"><b>联系方式:</b>&nbsp; <span id="phone"></span></li>
+				                                <li class="list-group-item"><b>身份类型:</b>&nbsp; <span id="type"></span></li>
+				                                <li class="list-group-item"><b>所属公司:</b>&nbsp; <span id="company"></span></li>
+				                            </ul>                            				
+                            			</td>
+                            			<td>
+                            				<img src="img/face/owner/1.jpg" height="270"/>
+                            			</td>
+                            		</tr>
+                            	</tbody>
+                            </table>
+							<table class="table table-bordered">
+								  <caption><font size="4sp"><b>近期门禁记录</b></font></caption>
+								  <thead >
+								    <tr >
+								      <th>门禁位置</th>
+								      <th>开门方式</th>
+								      <th>进出状态</th>
+								      <th>人脸信息</th>
+								      <th>开门时间</th>
+								    </tr>
+								  </thead>
+								  <tbody >
+								    <tr>
+								      <td>1幢1单元门</td>
+								      <td>人脸识别</td>
+								      <td>进入</td>
+								      <td><img src="img/face/owner/1.jpg" height="50" /></td>
+								      <td>2018-3-3     12:05:31</td>
+								    </tr>
+								    <tr>
+								      <td>1幢1单元门</td>
+								      <td>二维码识别</td>
+								      <td>进入</td>
+								      <td><img src="img/face/owner/1.jpg" height="50" /></td>
+								      <td>2018-3-3     15:28:32</td>
+								    </tr>
+								    <tr>
+								      <td>南大门</td>
+								      <td>人脸识别</td>
+								      <td>离开</td>
+								      <td><img src="img/face/owner/1.jpg" height="50" /></td>
+								      <td>2018-3-3     15:37:47</td>
+								    </tr>
+								    <tr>
+								      <td>正大门</td>
+								      <td>人脸识别</td>
+								      <td>离开</td>
+								      <td><img src="img/face/owner/1.jpg" height="50" /></td>
+								      <td>2018-3-3     12:00:19</td>
+								    </tr>
+								
+								  </tbody>
+							</table>   
+								
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<script type="text/javascript">
+    var editTable;//全局的datatable变量
+    
+    $('#ownerListTable tbody').on( 'click', 'button#delRow', function () {
+        var comfirm=confirm("确定删除?");
+        if(comfirm)
+        {
+            var data = editTable.row($(this).parents('tr') ).data();
+            $.ajax({
+                type: "get",
+                async: false,
+                url: urlConfig.deleteOwnerByPhone+data.phone,
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        alert("删除成功");
+                        editTable.ajax.reload( null, false );
+                    }
+                    else
+                    {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
+        }
+    });
+
+
+    $('#ownerListTable').on( 'click', 'button#detailRow', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        console.log(data);
+
+        $("#ownerInfo #name").text(data.name);
+        $("#ownerInfo #phone").text(data.phone);
+        $("#ownerInfo #sex").text(data.sex);
+        $("#ownerInfo #type").text(data.type);
+        $("#ownerInfo #company").text(data.company);
+        $("#ownerInfo #validTime").text(data.validTime);
+        $("#ownerInfo img").attr("src","img//face//other//"+data.faceURL);
+        $("#formModel").modal("show");//弹出框show
+    });
+    
+    
+    //初始化表格数据
+    function initDataTable(){
+        editTable=$('#ownerListTable').DataTable({
+            "processing":true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.otherList,
+                "dataSrc": "jsonString"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "data":null,
+                "orderable": false,
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
+            },{
+                "targets": 1,
+                "data": "name",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 2,
+                "data": "type",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 3,
+                "data": "sex",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 4,
+                "data": "phone",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 5,
+                "data": "company",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 6,
+                "data": "validTime",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 7,
+                "data": "faceURL",
+                "visible": true,
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, full, meta ) {  
+                	//return data;
+                	return "<img src='img//face//other//"+data+"'/>";
+                    //return '<img id="preview"  name=“faceURL” height=“100” src=“'+data+'”/>‘;
+                }
+            },{
+                "targets": 8,
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='detailRow' class='btn btn-primary' type='button'>查看</button>&ensp;" 
+            },{
+                "targets": 9,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='delRow' class='btn btn-primary' type='button'>删除</button>"
+            }
+            ],
+            "aaSorting": [[ 0, "asc" ]],
+            "autoWidth":false,
+            "sDom":
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+            "language": {
+                "emptyTable":     "没有相关数据",
+                "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
+                "infoEmpty":      "没有相关数据",
+                "infoFiltered":   "(筛选自 _MAX_ 条记录)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "每页显示 _MENU_ 条",
+                "loadingRecords": "加载中",
+                "processing":     "数据处理中",
+                "search":         "搜索:",
+                "zeroRecords":    "没有找到匹配数据",
+                "paginate": {
+                    "first":      "首页",
+                    "last":       "末页",
+                    "next":       "下一页",
+                    "previous":   "上一页"
+                },
+                "aria": {
+                    "sortAscending":  ":正序",
+                    "sortDescending": ":倒序"
+                }
+            }
+        });
+
+
+    }
+
+    $(document).ready(function() {
+        LoadDataTablesScripts(initDataTable);
+    });
+</script>

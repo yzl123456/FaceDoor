@@ -1,0 +1,551 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">投诉报修</a></li>
+            <li><a href="#">报修</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <a href="javascript:void(0)" id="addRepairMan">添加维修人员</a>
+                </div>
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="repairListTable">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>主题</th>
+                        <th>用户信息</th>
+                        <th>报修时间</th>
+                        <th>处理时间</th>
+                        <th>完成时间</th>
+                        <th>状态</th>
+                        <th>评分</th>
+                        <th>维修人员</th>
+                        <th>处理人</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Start: list_row -->
+                    <!-- End: list_row -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>序号</th>
+                        <th>主题</th>
+                        <th>用户信息</th>
+                        <th>报修时间</th>
+                        <th>处理时间</th>
+                        <th>完成时间</th>
+                        <th>状态</th>
+                        <th>评分</th>
+                        <th>维修人员</th>
+                        <th>处理人</th>
+                        <th>操作</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" role="dialog" id="chooseRepairManModel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">报修处理</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="chooseRepairManForm" method="post" action="" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">选择维修人员</label>
+                                    <div class="col-sm-6">
+                                        <select name="repairManID" id="repairManList">
+                                        </select>
+                                        <input type="hidden" name="repairID" id="repairID"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="submit">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" role="dialog" id="addRepairManModel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="">选择维修人员</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="addRepairManForm" method="post" action="" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">维修人员姓名</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="name"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">维修人员电话</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="phone"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-9 col-sm-offset-3">
+                                        <button type="submit" class="btn btn-primary">确定添加</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" role="dialog" id="repairInfoModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">报修详情</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>主题</h4>
+                            <div id="titleArea"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>概要</h4>
+                            <div id="descriptionArea"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>详细描述</h4>
+                            <div id="contentArea"></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="picArea"></div>
+                        </div>
+                    </div>
+                    <div class="row" id="commentInfo">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+    var editTable;//全局的datatable变量
+
+    //选择维修人员
+    $('#repairListTable tbody').on( 'click', 'button#chooseRepirman', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        $("#chooseRepairManForm #repairID").val(data.id);
+        $.ajax({
+            type: "get",
+            async: true,
+            url: urlConfig.getRepairManList,
+            dataType: "json",
+            success: function (result) {
+                if (result.status) {
+                    var html='<option value="">请选择维修人员</option>';
+                    if(result.jsonString==null)
+                        html='<option value="">--未设置维修人员--</option>';
+                    else
+                    {
+                        $.each(result.jsonString,function(k,v)
+                        {
+                            html+='<option value="'+ v.id+'">'+ v.name+'-'+ v.phone+'</option>';
+                        });
+                    }
+                    $("#repairManList").html(html);
+                }
+                else
+                {
+                    $("#repairManList").html('<option value="">--'+result.errorMsg.description+'--</option>');
+                }
+            },
+            error: function () {
+                $("#repairManList").html('<option value="">--网络连接失败--</option>');
+            }
+        });
+        $("#chooseRepairManModel").modal("show");//弹出框show
+    });
+    function selectRepairMan(){
+        $('#repairManList').select2();
+    }
+    $("#submit").on('click',function(){
+        console.log($("#chooseRepairManForm").serializeArray());
+        $.ajax({
+            type: "post",
+            async: false,
+            url: urlConfig.setRepairMan,
+            data:$("#chooseRepairManForm").serializeArray(),
+            dataType: "json",
+            success: function (result) {
+                if (result.status) {
+                    alert("设置成功!");
+                    editTable.ajax.reload( null, false );
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    });
+
+    //删除报修
+    $('#repairListTable tbody').on( 'click', 'button#deleteRowBtn', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        var con=confirm("确定删除该条报修?");
+        if(con)
+        {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.deleteRepair+data.id,
+                dataType: "json",
+                success: function (result) {
+                    if (result.status) {
+                        alert("删除成功!");
+                        editTable.ajax.reload( null, false );
+                    }
+                    else
+                    {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
+        }
+    });
+
+    //改变报修状态
+    $('#repairListTable tbody').on( 'click', 'button#changeStatusBtn', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        var con=confirm("确定将状态标记为已完成?");
+        if(con) {
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.finishRepair+data.id,
+                dataType: "json",
+                success: function (result) {
+                    if (result.status) {
+                        alert("设置成功");
+                        editTable.ajax.reload(null, false);
+                    }
+                    else {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("网络连接错误");
+                }
+            });
+        }
+
+    });
+
+    //查看报修的详情
+    $('#repairListTable tbody').on( 'click', 'button#detailRowBtn', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        console.log(data);
+        $("#repairInfoModal #titleArea").html(data.title);
+        $("#repairInfoModal #descriptionArea").html(data.description);
+        $("#repairInfoModal #contentArea").html("<p>"+data.content+"</p>");
+        $("#repairInfoModal #commentInfo").html("<h3>用户评论("+data.remark+")</h3><p>"+data.remarkText+"</p>");
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.getPicturePathsByID+data.id,
+            dataType: "json",
+            success: function (result) {
+                if(result.status)
+                {
+                    var imgList="";
+                    var pathString=result.jsonString.split(",");
+                    $.each(pathString,function(index,value){
+                        imgList+='<img max-width="100%" src="'+value+'" alt=""/><hr/>';
+                    });
+                    $("#picArea").html(imgList);
+                }
+            },
+            error: function () {
+
+            }
+        });
+        $("#repairInfoModal").modal("show");
+
+    });
+
+
+    /**
+     * 添加一个维修人员
+     */
+    $("#addRepairMan").click(function (){
+        $("#addRepairManModel").modal("show");
+    });
+    function repairManAddValidator() {
+        $('#addRepairManForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '维修人员姓名不能为空'
+                        }
+                    }
+                },
+                phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '电话号码不能为空'
+                        },
+                        regexp: {
+                            regexp: /^1[3-8][0-9]{9}$/,
+                            message: '电话号码不合法'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitForm();
+        });
+    }
+    function submitForm()
+    {
+        var data=$("#addRepairManForm").serializeArray();
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addRepairMan,
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+
+    //初始化表格数据
+    function initDataTable(){
+        editTable=$('#repairListTable').DataTable({
+            "processing":true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.repairList,
+                "dataSrc": "jsonString"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "data":null,
+                "orderable": false,
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
+            },{
+                "targets": 1,
+                "data": "title",
+                "orderable": true,
+                "searchable": false
+
+            },{
+                "targets": 2,
+                "data": "phone",
+                "orderable": false,
+                "searchable": false
+
+            },{
+                "targets": 3,
+                "data": "submitTime",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    return formatDate(data,"yyyy-MM-dd");
+                }
+            },{
+                "targets": 4,
+                "data": "processTime",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    return formatDate(data,"yyyy-MM-dd");
+                }
+            },{
+                "targets": 5,
+                "data": "finishTime",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    return formatDate(data,"yyyy-MM-dd");
+                }
+            },{
+                "targets": 6,
+                "data": "status",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    if(data==0)
+                    {
+                        return '<font color="red">待处理</font>';
+                    }
+                    else if(data==1)
+                        return "<font color='#00008b'>维修中</font>";
+                    else if(data==2)
+                        return '<font color="green">待评价</font>';
+                    else if(data==3)
+                        return '<font color="green">已完成</font>';
+                    else
+                        return "--";
+                }
+            },{
+                "targets": 7,
+                "data": "remark",
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":"--"
+
+            },{
+                "targets": 8,
+                "data": "status",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    if(data==0)
+                    {
+                        return "<button id='chooseRepirman' class='btn btn-primary' type='button'>设置</button>";
+                    }
+                    else
+                        return row.repairManEntity.name+"-"+row.repairManEntity.phone;
+                }
+            },{
+                "targets": 9,
+                "data": "consoleUserEntity.name",
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":"--"
+
+            },{
+                "targets": 10,
+                "data": "status",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    if(data==0)
+                        return "<button id='detailRowBtn' class='btn btn-primary' type='button'>详情</button>";
+                    else if(data==1)
+                        return "<button id='detailRowBtn' class='btn btn-primary' type='button'>详情</button>&ensp;"+
+                                "<button id='changeStatusBtn' class='btn btn-primary' type='button'>完成</button>";
+                    else if(data==2)
+                        return "<button id='detailRowBtn' class='btn btn-primary' type='button'>详情</button>";
+                    else if(data==3)
+                        return "<button id='detailRowBtn' class='btn btn-primary' type='button'>详情</button>&ensp;"+
+                                "<button id='deleteRowBtn' class='btn btn-primary' type='button'>删除</button>";
+                    else
+                        return "--";
+                }
+            }
+            ],
+            "aaSorting": [[ 1, "asc" ]],
+            "autoWidth":false,
+            "sDom":
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+            "language": {
+                "emptyTable":     "没有相关数据",
+                "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
+                "infoEmpty":      "没有相关数据",
+                "infoFiltered":   "(筛选自 _MAX_ 条记录)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "每页显示 _MENU_ 条",
+                "loadingRecords": "加载中",
+                "processing":     "数据处理中",
+                "search":         "搜索:",
+                "zeroRecords":    "没有找到匹配数据",
+                "paginate": {
+                    "first":      "首页",
+                    "last":       "末页",
+                    "next":       "下一页",
+                    "previous":   "上一页"
+                },
+                "aria": {
+                    "sortAscending":  ":正序",
+                    "sortDescending": ":倒序"
+                }
+            }
+        });
+
+    }
+
+
+    $(document).ready(function() {
+        LoadSelect2Script(selectRepairMan);
+        LoadDataTablesScripts(initDataTable);
+        LoadBootstrapValidatorScript(repairManAddValidator);
+    });
+</script>

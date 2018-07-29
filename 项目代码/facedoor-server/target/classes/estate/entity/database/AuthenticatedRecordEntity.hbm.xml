@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.AuthenticatedRecordEntity" table="authenticated_record" schema=""
+           catalog="PropertySystem">
+        <id name="id">
+            <column name="id" sql-type="int unsigned" not-null="true"/>
+        </id>
+        <property name="applicant">
+            <column name="applicant" sql-type="varchar" length="45"/>
+        </property>
+        <property name="applicationTime">
+            <column name="application_time" sql-type="bigint"/>
+        </property>
+        <property name="applicationType">
+            <column name="application_type" sql-type="tinyint"/>
+        </property>
+        <property name="authId">
+            <column name="auth_id" sql-type="int unsigned"/>
+        </property>
+        <property name="authResult">
+            <column name="auth_result" sql-type="tinyint"/>
+        </property>
+        <property name="authTime">
+            <column name="auth_time" sql-type="bigint"/>
+        </property>
+    </class>
+</hibernate-mapping>

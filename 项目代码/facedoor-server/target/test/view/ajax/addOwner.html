@@ -1,0 +1,275 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">用户管理</a></li>
+            <li><a href="#">增加业主</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form id="ownerAddForm" method="post" action="" enctype="multipart/form-data" class="form-horizontal">
+                    <fieldset>
+                        <legend>基本信息</legend>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">姓名</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">性别</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="sex">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                    	<!-- 
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车牌号</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" placeholder="xxxxx;xxxxx"
+                                       name="vehicleIdList" />
+                            </div>
+                        </div>
+                      	-->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">电话号码</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="phone" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">证件类型</label>
+                            <div class="col-sm-5">
+                                <select name="identityType" class="form-control" id="identityType">
+                                    <option value="1">身份证</option>
+                                    <option value="2">军人证</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">证件号码</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="identityCode" />
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="col-sm-3 control-label">入住时间</label>
+                            <div class="col-sm-5">
+                                <input type="text" id="authTime" name="authTime"
+                                       class="form-control input_date" placeholder="">
+                            </div>
+                        </div>
+                 
+                       	<div class="form-group">
+                            <label class="col-sm-3 control-label">人脸</label>
+                            <div class="col-sm-5">
+		                      	<input id="f" type="file" name="face" onchange="change()" />
+		 						<img id="preview" alt="" name="pic" height="200" />
+                                
+                            </div>  	
+				
+                        </div>
+
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+	function change() {
+	    var pic = document.getElementById("preview"),
+	        file = document.getElementById("f");
+	
+	    var ext=file.value.substring(file.value.lastIndexOf(".")+1).toLowerCase();
+	
+	     // gif在IE浏览器暂时无法显示
+	     if(ext!='png'&&ext!='jpg'&&ext!='jpeg'){
+	         alert("图片的格式必须为png或者jpg或者jpeg格式！"); 
+	         return;
+	     }
+	     var isIE = navigator.userAgent.match(/MSIE/)!= null,
+	         isIE6 = navigator.userAgent.match(/MSIE 6.0/)!= null;
+	
+	     if(isIE) {
+	        file.select();
+	        var reallocalpath = document.selection.createRange().text;
+	
+	        // IE6浏览器设置img的src为本地路径可以直接显示图片
+	         if (isIE6) {
+	            pic.src = reallocalpath;
+	         }else {
+	            // 非IE6版本的IE由于安全问题直接设置img的src无法显示本地图片，但是可以通过滤镜来实现
+	             pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',src=\"" + reallocalpath + "\")";
+	             // 设置img的src为base64编码的透明图片 取消显示浏览器默认图片
+	             pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+	         }
+	     }else {
+	        html5Reader(file);
+	     }
+	}
+	
+	 function html5Reader(file){
+	     var file = file.files[0];
+	     var reader = new FileReader();
+	     reader.readAsDataURL(file);
+	     reader.onload = function(e){
+	         var pic = document.getElementById("preview");
+	         pic.src=this.result;
+	     }
+	 }
+	 
+	 
+    function submitForm()
+    {	
+    	
+        var data=$("#ownerAddForm").serializeArray();
+        var formData=new FormData($("#ownerAddForm")[0]);
+        $.ajax({
+            type: "post",
+            async: true,
+            url: urlConfig.addOwner,
+            data: formData,
+            dataType: "json", //返回数据形式为json
+            async : false,
+            cache : false,
+            contentType : false,
+            processData : false,
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+        
+        /*
+        var formData=new FormData($("#face"));
+        $.ajax({
+            type: "post",
+            async: false,
+            url: urlConfig.addOwner,
+            data: formData,
+            contentType:false,
+            processData:false,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+            */
+    }
+
+    function ownerAddValidator(){
+        $('#ownerAddForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                name: {
+                    message: '用户名不合法',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 10,
+                            message: '用户名在2到10个字符之间'
+                        }
+                    }
+                },
+                address:{
+                    validators: {
+                        notEmpty: {
+                            message: '地址不能为空'
+                        }
+                    }
+                },
+                identityCode:{
+                    validators: {
+                        notEmpty: {
+                            message: '证件号码不能为空'
+                        },
+                        regexp: {
+                            regexp:/^[A-Za-z0-9]+$/,
+                            message: '证件号码只能为数字或者字母的组合'
+                        }
+                    }
+                },
+//                identityCode:{
+//                    validators: {
+//                        notEmpty: {
+//                            message: '车牌号不能为空'
+//                        },
+//                        regexp: {
+//                            regexp: /^[0-9a-zA-Z]{5}(;[0-9a-zA-Z]{5})*$/,
+//                            message: '车牌号不合法'
+//                        }
+//                    }
+//                },
+                phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '电话号码不能为空'
+                        },
+                        regexp: {
+                            regexp: /^1[3-8][0-9]{9}$/,
+                            message: '电话号码不合法'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+            e.preventDefault();
+            submitForm();
+        });
+    }
+    $(document).ready(function() {
+        //初始化日期选择器
+        $('.input_date').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
+            showButtonPanel:true,
+            closeText:"关闭",
+            yearSuffix: '年',
+            currentText:'今天',
+            showMonthAfterYear:true,
+            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+            dayNamesMin: ['日','一','二','三','四','五','六']
+        });
+        LoadBootstrapValidatorScript(ownerAddValidator);
+    });
+</script>

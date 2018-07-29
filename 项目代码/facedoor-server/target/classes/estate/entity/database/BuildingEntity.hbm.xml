@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.BuildingEntity" table="building" schema="" catalog="PropertySystem">
+        <id name="id">
+            <column name="building_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <property name="villageId">
+            <column name="village_id" sql-type="int unsigned"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar" length="45"/>
+        </property>
+        <property name="buildingCode">
+            <column name="building_code" sql-type="varchar" length="45"/>
+        </property>
+        <property name="buildingName">
+            <column name="building_name" sql-type="varchar" length="45"/>
+        </property>
+    </class>
+</hibernate-mapping>

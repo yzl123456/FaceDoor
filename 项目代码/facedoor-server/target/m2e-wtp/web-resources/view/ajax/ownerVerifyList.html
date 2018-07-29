@@ -1,0 +1,203 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">信息管理</a></li>
+            <li><a href="#">信息审核</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <!--<button id="addOwnerBtn" class="btn btn-info">添加业主</button>-->
+                </div>
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="ownerListTable">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>业户号</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>注册来源</th>
+                        <th>人脸信息</th>
+                        <th>审核状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>业户号</th>
+                        <th>性别</th>
+                        <th>电话</th>
+                        <th>注册来源</th>
+                        <th>人脸信息</th>
+                        <th>审核状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    var editTable;//全局的datatable变量
+    //初始化表格数据
+    function initDataTable(){
+        editTable=$('#ownerListTable').DataTable({
+            "processing":true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.ownerVerifyList,
+                "dataSrc": "jsonString"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "data":null,
+                "orderable": false,
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
+            },{
+                "targets": 1,
+                "data": "name",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 2,
+                "data": "room",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 3,
+                "data": "sex",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 4,
+                "data": "phone",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 5,
+                "data": "source",
+                "visible": true,
+                "orderable": false,
+                "searchable": true
+
+            },{
+                "targets": 6,
+                "data": "faceURL",
+                "visible": true,
+                "orderable": false,
+                "searchable": true,
+                "render": function ( data, type, full, meta ) {  
+                	//return data;
+                	return "<img src='img//face//verify//"+data+"'/>";
+                    //return '<img id="preview"  name=“faceURL” height=“100” src=“'+data+'”/>‘;
+                }
+            },{
+                "targets": 7,
+                "data": "statu",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, full, meta ) {  
+                	if(data=="待审核")
+                		return "<font color='red'>"+data+"<font/>";
+               		else if(data=="已通过")
+               			return "<font color='green'>"+data+"<font/>";
+             		else
+             			return "<font color='red'>"+data+"<font/>";
+                		//return '<img id="preview"  name=“faceURL” height=“100” src=“'+data+'”/>‘;
+                }
+            },{
+                "targets": 8,//删除
+                "data": "statu",
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, full, meta ) {  
+                	if(data=="待审核"){
+                		return "<button id='detailRow' class='btn btn-primary' type='button'>通过</button>&ensp;" +
+                        "<button id='delRow' class='btn btn-primary' type='button'>拒绝</button>";
+                	}
+                	else return null;
+                }
+
+                
+            },{
+                "targets": 9,//删除
+                "data": "id",
+                "visible": false,
+                "orderable": false,
+                "searchable": false,
+            }
+            ],
+            "aaSorting": [[ 0, "asc" ]],
+            "autoWidth":false,
+            "sDom":
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+            "language": {
+                "emptyTable":     "没有相关数据",
+                "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
+                "infoEmpty":      "没有相关数据",
+                "infoFiltered":   "(筛选自 _MAX_ 条记录)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "每页显示 _MENU_ 条",
+                "loadingRecords": "加载中",
+                "processing":     "数据处理中",
+                "search":         "搜索:",
+                "zeroRecords":    "没有找到匹配数据",
+                "paginate": {
+                    "first":      "首页",
+                    "last":       "末页",
+                    "next":       "下一页",
+                    "previous":   "上一页"
+                },
+                "aria": {
+                    "sortAscending":  ":正序",
+                    "sortDescending": ":倒序"
+                }
+            }
+        });
+
+
+    }
+
+    $(document).ready(function() {
+        LoadDataTablesScripts(initDataTable);
+    });
+</script>

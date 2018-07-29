@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.PropertyEntity" table="property" schema="" catalog="PropertySystem">
+        <id name="id">
+            <column name="property_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <property name="code">
+            <column name="code" sql-type="varchar" length="45"/>
+        </property>
+        <property name="location">
+            <column name="location" sql-type="varchar" length="100"/>
+        </property>
+        <property name="type">
+            <column name="type" sql-type="tinyint"/>
+        </property>
+        <property name="propertySquare">
+            <column name="property_square" sql-type="decimal" precision="11" scale="2"/>
+        </property>
+        <property name="ownerType">
+            <column name="owner_type" sql-type="tinyint"/>
+        </property>
+        <property name="villageId">
+            <column name="village_id" sql-type="int unsigned"/>
+        </property>
+        <property name="buildingId">
+            <column name="building_id" sql-type="int unsigned"/>
+        </property>
+        <property name="openDoorStatus">
+            <column name="open_door_status" sql-type="tinyint"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="tinyint"/>
+        </property>
+        <property name="modifyTime">
+            <column name="modify_time" sql-type="bigint" default="0"/>
+        </property>
+        <many-to-one name="buildingEntity" insert="false" update="false"
+                     lazy="false" class="estate.entity.database.BuildingEntity">
+            <column name="building_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.AppUserEntity" table="app_user" schema="" catalog="PropertySystem">
+        <id name="phone">
+            <column name="phone" sql-type="varchar" length="15" not-null="true"/>
+        </id>
+        <property name="passwd">
+            <column name="passwd" sql-type="varchar" length="45"/>
+        </property>
+        <property name="salt">
+            <column name="salt" sql-type="varchar" length="15"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="tinyint"/>
+        </property>
+        <property name="nickname">
+            <column name="nickname" sql-type="varchar" length="45"/>
+        </property>
+        <property name="registerTime">
+            <column name="register_time" sql-type="bigint"/>
+        </property>
+        <property name="lastLogin">
+            <column name="last_login"  sql-type="bigint"/>
+        </property>
+    </class>
+</hibernate-mapping>

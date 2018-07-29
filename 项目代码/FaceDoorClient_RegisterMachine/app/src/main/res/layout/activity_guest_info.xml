@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="1"
+    android:gravity="center"
+    >
+    <!-- 个人信息-->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="个人信息："
+            android:layout_marginTop="15dp"
+            android:textSize="16sp" />
+
+    </TableRow>
+
+    <!-- 姓名 -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="姓名："
+            android:layout_marginTop="15dp"
+            android:textSize="16sp" />
+        <LinearLayout>
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:selectAllOnFocus="true"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+    </TableRow>
+    <!-- 密码 -->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="手机号："
+            android:textSize="16sp" />
+
+        <LinearLayout>
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                />
+
+            <Button
+                android:id="@+id/send_mess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="发送验证码" />
+
+        </LinearLayout>
+
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="验证码："
+            android:textSize="16sp" />
+
+        <LinearLayout>
+            <EditText
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:inputType="number"
+                />
+        </LinearLayout>
+    </TableRow>
+    <!-- 业主信息-->
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="业主信息："
+            android:layout_marginTop="15dp"
+            android:textSize="16sp" />
+
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="姓名："
+            android:layout_marginTop="15dp"
+            android:textSize="16sp" />
+        <LinearLayout>
+            <EditText
+                android:id="@+id/et_name2"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:selectAllOnFocus="true"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="手机号："
+            android:textSize="16sp" />
+
+        <LinearLayout>
+
+            <EditText
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:singleLine="true"
+                />
+
+
+        </LinearLayout>
+
+
+    </TableRow>
+    <!-- 注册 -->
+    <TableRow android:gravity="center">
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="录入人脸"
+            android:layout_marginTop="20dp"
+            />
+    </TableRow>
+</TableLayout>

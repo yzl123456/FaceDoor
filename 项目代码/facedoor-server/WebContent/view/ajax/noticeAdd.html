@@ -1,0 +1,165 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">公告管理</a></li>
+            <li><a href="#">新增公告</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form id="addNoticeForm" method="post"
+                      class="form-horizontal">
+                    <fieldset>
+                        <legend>基本信息</legend>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">公告标题</label>
+
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="title"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">公告描述</label>
+
+                            <div class="col-sm-8">
+                                <textarea class="form-control" name="description" id="" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="col-sm-2 control-label">失效时间</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="expireTime" name="expiretime" class="input_date form-control" placeholder="">
+                                <span class="fa fa-calendar form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">公告详情</label>
+
+                            <div class="col-sm-8">
+                                <textarea class="form-control" name="content" style="height: 300px;"
+                                          id="kindEditor"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-2">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script charset="utf-8" src="plugins/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript">
+    var editor;
+
+    function initEditor() {
+        editor = KindEditor.create('#kindEditor',
+                {
+                    width: "100%",
+                    items: ['undo', 'redo', '|', 'preview', 'code', 'cut', 'copy', 'paste',
+                        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+                        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+                        'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons',
+                        'anchor', 'link', 'unlink', '|', 'about'],
+                    basePath:"plugins/kindeditor/",
+                    allowFileManager: false,
+                    uploadJson: urlConfig.uploadJson
+                });
+    }
+
+    function submitForm()
+    {
+        var fields=$("#addNoticeForm").serializeArray();
+        console.log(fields);
+        $.each(fields,function(k,v){
+            if(v.name=="content")
+            {
+                fields[k].value=editor.html();
+            }
+        });
+        $.ajax({
+            type: "post",
+            async: false,
+            url: urlConfig.addNotice,
+            data:fields ,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.status) {
+                    alert("添加成功");
+                }
+                else
+                {
+                    alert(result.errorMsg.description);
+                }
+            },
+            error: function () {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    }
+
+    function noticeAddValidator() {
+        $('#addNoticeForm').bootstrapValidator({
+            message: '存在非法输入',
+            fields: {
+                title: {
+                    validators: {
+                        notEmpty: {
+                            message: '标题不能为空'
+                        }
+                    }
+                },
+                description: {
+                    validators: {
+                        notEmpty: {
+                            message: '描述不能为空'
+                        }
+                    }
+                },
+                content:{
+                    validators: {
+                        notEmpty: {
+                            message: '详情不能为空'
+                        }
+                    }
+                }
+            }
+        }).on("success.form.bv",function(e){
+                    e.preventDefault();
+                    submitForm();
+                });
+    }
+    $(document).ready(function () {
+        $('.input_date').datepicker({
+            setDate: new Date(), dateFormat: "yy-mm-dd",
+            showButtonPanel: true,
+            closeText: "关闭",
+            yearSuffix: '年',
+            currentText: '今天',
+            showMonthAfterYear: true,
+            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+            dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+            dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+            dayNamesMin: ['日', '一', '二', '三', '四', '五', '六']
+        });
+        LoadBootstrapValidatorScript(noticeAddValidator);
+        LoadKindEditorScript(initEditor);
+    });
+</script>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">FaceDoor</string>
+    <string name="camera">相机</string>
+    <string name="album">相册</string>
+    <string-array name="sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="relation">
+        <item>业主子女</item>
+        <item>业主</item>
+        <item>业主父母</item>
+    </string-array>
+    <string-array name="doorLimitTime">
+        <item>1个月</item>
+        <item>2个月</item>
+        <item>3个月</item>
+    </string-array>
+</resources>

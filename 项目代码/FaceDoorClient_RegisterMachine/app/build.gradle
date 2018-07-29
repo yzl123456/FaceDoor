@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+// 添加插件
+apply plugin: 'com.mob.sdk'
+android {
+    compileSdkVersion 24
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "com.arcsoft.sdk_demo"
+        minSdkVersion 19
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.1"
+        sourceSets.main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "2560863a197a0"
+    appSecret "0280c4c4cfb94a783b608f85f8b228bf"
+
+    SMSSDK {}
+}
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/facedetection.jar')
+    compile files('libs/facerecognition.jar')
+    compile files('libs/facetracking.jar')
+    compile files('libs/ageestimation.jar')
+    compile files('libs/genderestimation.jar')
+    compile 'com.guo.android_extend:android-extend:1.0.1'
+    compile 'com.squareup.okhttp3:okhttp:3.3.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.yuzhiqiang1993:zxing:2.1.1'
+}

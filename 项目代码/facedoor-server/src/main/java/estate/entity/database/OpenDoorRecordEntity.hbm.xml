@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.OpenDoorRecordEntity" table="open_door_record" schema=""
+           catalog="PropertySystem">
+        <id name="id">
+            <column name="odr_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <property name="phone">
+            <column name="phone" sql-type="varchar" length="15"/>
+        </property>
+        <property name="openTime">
+            <column name="open_time" sql-type="bigint"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="tinyint"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar" length="100"/>
+        </property>
+        <property name="level">
+            <column name="level" sql-type="tinyint"/>
+        </property>
+    </class>
+</hibernate-mapping>

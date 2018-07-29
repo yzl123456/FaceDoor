@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.BillEntity" table="bill" schema="" catalog="PropertySystem">
+        <id name="id">
+            <column name="id" sql-type="int unsigned" not-null="true"/>
+        </id>
+        <property name="propertyId">
+            <column name="property_id" sql-type="int unsigned"/>
+        </property>
+        <property name="feeItemFee">
+            <column name="fee_item_fee" sql-type="varchar"/>
+        </property>
+        <property name="payStatus">
+            <column name="pay_status" sql-type="tinyint" default="0"/>
+        </property>
+        <property name="payType">
+            <column name="pay_type" sql-type="tinyint"/>
+        </property>
+        <property name="payTime">
+            <column name="pay_time" sql-type="bigint"/>
+        </property>
+        <property name="billGenerationTime">
+            <column name="bill_generation_time" sql-type="bigint"/>
+        </property>
+        <property name="overdueFee">
+            <column name="overdue_fee" sql-type="decimal" precision="11" scale="2" default="0.00"/>
+        </property>
+        <property name="payer">
+            <column name="payer" sql-type="varchar" length="45" default=""/>
+        </property>
+    </class>
+</hibernate-mapping>

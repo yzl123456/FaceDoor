@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="red">#FF0000</color>
+    <color name="write">#FFFFFF</color>
+    <color name="style">#47D1C1</color>
+    <color name="gray">#FFEFD5</color>
+    <color name="black">#000000</color>
+    <color name="green">#5BE492</color>
+    <color name="black1">#999999</color>
+    <color name="divier">#E5E5E5</color>
+    <color name="or">#FF7F2B</color>
+    <color name="white2">#FAFAD2</color>
+    <color name="carrot">#CC6600</color>
+    <color name="lavenderblush">#FFF0F5</color>
+    <color name="burlywood">#DEB887</color>
+    <color name="mediumseagreen">#3CB371</color>
+    <color name="lightsalmon">#FFA07A</color>
+    <color name="red1">#90EE90</color>
+    <color name="gray1">#808080</color>
+    <color name="lightgray">#f5f5f5</color>
+    <color name="gray2">#f5f5f5</color>
+    <color name="bc">#FCF0C1</color>
+    <color name="text_black">#757375</color>
+    <color name="wifi_open_pressed">#d35400</color>
+    <color name="wifi_open_unpressed">#e67d21</color>
+    <color name="rb_unpressed">#6E7682</color>
+    <color name="needUse">#ff9933</color>
+    <color name="dueTime">#888888</color>
+    <color name="white">#ffffff</color>
+    <color name="isUsing">#75D701</color>
+
+
+    <color name="my_stop_theme_orange">#f2845b</color>
+</resources>

@@ -1,0 +1,259 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">物业费管理</a></li>
+            <li><a href="#">费用项目</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                </div>
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="estateListTable">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>业主编号</th>
+                        <th>姓名</th>
+                        <th>联系电话</th>
+                        <th>投诉时间</th>
+                        <th>处理状态</th>
+                        <th>用户打分</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Start: list_row -->
+                    <!-- End: list_row -->
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>序号</th>
+                        <th>业主编号</th>
+                        <th>姓名</th>
+                        <th>联系电话</th>
+                        <th>投诉时间</th>
+                        <th>处理状态</th>
+                        <th>用户打分</th>
+                        <th>操作</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" role="dialog" id="formModel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">编辑费用项目</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="editForm" method="post" action="" class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-7">
+                                        <input type="hidden" class="form-control" name="estateID" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">费用名</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="estateName" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">单价</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="perPrice" name="perPrice" />
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label class="col-sm-3 control-label">收费时间</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" id="payTime" name="payTime" class="form-control" placeholder="">
+                                        <span class="fa fa-calendar form-control-feedback"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">逾期周期</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="outlineTime" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">迟滞金规则(月)</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" name="outlineMoney" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="submitEstate">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+    var editTable;//全局的datatable变量
+
+    //删除数据
+    $('#estateListTable tbody').on( 'click', 'button#delrow', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        $.ajax({
+            type: "post",
+            async: false,
+            url: "statis.do",
+            data: {
+                action:"delete",
+                estateID:data[0]
+            },
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.success) {
+
+                    $(result.jsonString).each(function () {
+                        tablePartSelect.append("<option value='" + this.id + "'>" + this.name + "</option>");
+                    });
+                } else {
+                    alert(result.errorMsg);
+                }
+            },
+            error: function (errorMsg) {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    });
+
+    //编辑数据
+    $('#estateListTable tbody').on( 'click', 'button#editrow', function () {
+        var data = editTable.row($(this).parents('tr') ).data();
+        var fields = $("#editForm").serializeArray();
+        console.log(data);
+        jQuery.each( fields, function(i, field){
+            $(":input[name='"+field.name+"']").val(data[i]);
+        });
+        $(":input[name='action']").val("edit");
+        $("#formModel").modal("show");//弹出框show
+        $("#formModel").find('.modal-title').text("编辑费用项目");
+
+    });
+
+    $("#submitEstate").click(function(){
+        var data=$("#editForm").serializeArray();
+        data.push({name:"action",value:"edit"});
+        $.ajax({
+            type: "post",
+            async: false,
+            url: "statis.do",
+            data: data,
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                if (result.success) {
+
+                    $(result.jsonString).each(function () {
+                        tablePartSelect.append("<option value='" + this.id + "'>" + this.name + "</option>");
+                    });
+                } else {
+                    alert(result.errorMsg);
+                }
+            },
+            error: function (errorMsg) {
+                alert("服务器连接失败,请重试!");
+            }
+        });
+    });
+
+    //初始化表格数据
+    function initDataTable(){
+        editTable=$('#estateListTable').DataTable({
+            "ajax":"testdata/data.txt",
+            "aaSorting": [[ 1, "asc" ]],
+            "autoWidth":false,
+            "sDom":
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+            "language": {
+                "emptyTable":     "没有相关数据",
+                "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
+                "infoEmpty":      "没有相关数据",
+                "infoFiltered":   "(筛选自 _MAX_ 条记录)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "每页显示 _MENU_ 条",
+                "loadingRecords": "加载中",
+                "processing":     "数据处理中",
+                "search":         "搜索:",
+                "zeroRecords":    "没有找到匹配数据",
+                "paginate": {
+                    "first":      "首页",
+                    "last":       "末页",
+                    "next":       "下一页",
+                    "previous":   "上一页"
+                },
+                "aria": {
+                    "sortAscending":  ":正序",
+                    "sortDescending": ":倒序"
+                }
+            },
+            "columnDefs": [{
+                "targets": -1,//删除
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                "<button id='pass' class='btn btn-primary' type='button'>处理</button>&ensp;" +
+                "<button id='back' class='btn btn-primary' type='button'>删除</i></button>"
+            },{
+                "data": null,
+                "visible": true,
+                "orderable": false,
+                "searchable": false,
+                "targets": 0
+            }
+            ]
+        });
+        editTable.on( 'order.dt search.dt', function () {
+            editTable.column(0).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+
+    }
+    $(document).ready(function() {
+        $('#payTime').datepicker({setDate: new Date(),dateFormat:"yy-mm-dd",
+            showButtonPanel:true,
+            closeText:"关闭",
+            yearSuffix: '年',
+            currentText:'今天',
+            showMonthAfterYear:true,
+            monthNames: ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+            dayNamesMin: ['日','一','二','三','四','五','六']
+        });
+        LoadDataTablesScripts(initDataTable);
+    });
+</script>

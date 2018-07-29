@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.FamilyEntity" table="family" schema="" catalog="PropertySystem">
+        <id name="familyId">
+            <column name="family_id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <property name="phone">
+            <column name="phone" sql-type="varchar" length="15"/>
+        </property>
+        <property name="name">
+            <column name="name" sql-type="varchar" length="45"/>
+        </property>
+        <property name="sex">
+            <column name="sex" sql-type="tinyint"/>
+        </property>
+        <property name="birthday">
+            <column name="birthday" sql-type="bigint"/>
+        </property>
+        <property name="urgentName">
+            <column name="urgent_name" sql-type="varchar" length="45"/>
+        </property>
+        <property name="urgentPhone">
+            <column name="urgent_phone" sql-type="varchar" length="15"/>
+        </property>
+        <property name="identityType">
+            <column name="identity_type" sql-type="tinyint"/>
+        </property>
+        <property name="identityCode">
+            <column name="identity_code" sql-type="varchar" length="45"/>
+        </property>
+        <property name="ownerRelationship">
+            <column name="owner_relationship" sql-type="varchar" length="20"/>
+        </property>
+        <property name="ownerId">
+            <column name="owner_id" sql-type="int unsigned"/>
+        </property>
+        <property name="propertyId">
+            <column name="property_id" sql-type="int unsigned"/>
+        </property>
+        <property name="authenticationTime">
+            <column name="authentication_time" sql-type="bigint"/>
+        </property>
+        <property name="vehicleIdList">
+            <column name="vehicle_id_list" sql-type="varchar" length="50"/>
+        </property>
+        <property name="authStatus">
+            <column name="auth_status" sql-type="tinyint"/>
+        </property>
+    </class>
+</hibernate-mapping>

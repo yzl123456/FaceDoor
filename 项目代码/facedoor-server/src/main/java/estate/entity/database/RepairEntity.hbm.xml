@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.RepairEntity" table="repair" schema="" catalog="PropertySystem">
+        <id name="id">
+            <column name="id" sql-type="int unsigned" not-null="true"/>
+            <generator class="identity"/>
+        </id>
+        <property name="title">
+            <column name="title" sql-type="varchar" length="100"/>
+        </property>
+        <property name="content">
+            <column name="content" sql-type="text" length="65535"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar" length="100"/>
+        </property>
+        <property name="submitTime">
+            <column name="submit_time" sql-type="bigint"/>
+        </property>
+        <property name="processTime">
+            <column name="process_time" sql-type="bigint"/>
+        </property>
+        <property name="phone">
+            <column name="phone" sql-type="varchar" length="15"/>
+        </property>
+        <property name="finishTime">
+            <column name="finish_time" sql-type="bigint"/>
+        </property>
+        <property name="imageIdList">
+            <column name="image_id_list" sql-type="varchar" length="50"/>
+        </property>
+        <property name="status">
+            <column name="status" sql-type="tinyint" default="0"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="varchar" length="10"/>
+        </property>
+        <property name="remarkText">
+            <column name="remark_text" sql-type="varchar" length="100"/>
+        </property>
+        <property name="cuId">
+            <column name="cu_id" sql-type="int unsigned"/>
+        </property>
+        <property name="result">
+            <column name="result" sql-type="varchar" length="200"/>
+        </property>
+        <property name="repairManId">
+            <column name="repair_man_id" sql-type="int unsigned"/>
+        </property>
+        <many-to-one name="consoleUserEntity" lazy="false" update="false" insert="false"
+                     class="estate.entity.database.ConsoleUserEntity">
+            <column name="cu_id"/>
+        </many-to-one>
+        <many-to-one name="repairManEntity" lazy="false" update="false" insert="false"
+                     class="estate.entity.database.RepairManEntity">
+            <column name="repair_man_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

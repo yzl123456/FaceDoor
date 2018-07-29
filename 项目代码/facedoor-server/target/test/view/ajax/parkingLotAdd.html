@@ -1,0 +1,67 @@
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">车位管理</a></li>
+            <li><a href="#">增加车位信息</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content">
+                <form id="adduserForm" method="post" action="" class="form-horizontal">
+                    <fieldset>
+                        <legend>新增车位</legend>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车位编号</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="userCode" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车位所属</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="username" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车位类型</label>
+                            <div class="col-sm-5">
+                                <select class="form-control">
+                                    <option value="0">请选择所有者</option>
+                                    <option value="1">业主所有</option>
+                                    <option value="2">物业所有</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">设置业主</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" name="username" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //选择所属园区
+    $(document).ready(function() {
+    });
+</script>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="estate.entity.database.ConsoleUserEntity" table="console_user" schema="" catalog="PropertySystem">
+        <id name="id">
+            <column name="cu_id" sql-type="int unsigned" not-null="true"/>
+        </id>
+        <property name="password">
+            <column name="password" sql-type="varchar" length="45"/>
+        </property>
+        <property name="phone">
+            <column name="phone" sql-type="varchar" length="45"/>
+        </property>
+        <property name="email">
+            <column name="email" sql-type="varchar" length="45"/>
+        </property>
+        <property name="consoleGroupId">
+            <column name="console_group_id" sql-type="int"/>
+        </property>
+        <property name="name">
+            <column name="name" sql-type="varchar" length="45"/>
+        </property>
+        <property name="identityType">
+            <column name="identity_type" sql-type="tinyint"/>
+        </property>
+        <property name="identityId">
+            <column name="identity_id" sql-type="varchar" length="45"/>
+        </property>
+        <property name="remark">
+            <column name="remark" sql-type="int"/>
+        </property>
+    </class>
+</hibernate-mapping>

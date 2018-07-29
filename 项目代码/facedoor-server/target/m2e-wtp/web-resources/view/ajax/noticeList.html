@@ -1,0 +1,237 @@
+<link href="css/buttons.dataTables.min.css" rel="stylesheet">
+<link href="css/select.dataTables.min.css" rel="stylesheet">
+
+<div class="row">
+    <div id="breadcrumb" class="col-md-12">
+        <ol class="breadcrumb">
+            <li><a href="#">公告管理</a></li>
+            <li><a href="#">历史公告</a></li>
+        </ol>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-icons">
+                    <a class="expand-link">
+                        <i class="fa fa-expand"></i>
+                    </a>
+                </div>
+                <div class="no-move"></div>
+            </div>
+            <div class="box-content no-padding">
+                <table class="display table table-bordered table-striped table-hover table-heading table-datatable"
+                       id="estateListTable">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>公告标题</th>
+                        <th>发布时间</th>
+                        <th>失效时间</th>
+                        <th>发布人</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>序号</th>
+                        <th>公告标题</th>
+                        <th>发布时间</th>
+                        <th>失效时间</th>
+                        <th>发布人</th>
+                        <th>操作</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" role="dialog" id="noticeModal">
+    <div class="modal-dialog" style="width: 800px;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">公告详细信息</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <h3 id="title"></h3>
+                    <hr/>
+                    <p id="description"></p>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12" id="detail">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+    var editTable;//全局的datatable变量
+
+    //删除数据
+    $('#estateListTable').on( 'click', 'button#delrowBtn', function () {
+        var comfirm=confirm("确定删除该公告?");
+        if(comfirm) {
+            var data = editTable.row($(this).parents('tr')).data();
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.noticeDelete+data.id,
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        editTable.ajax.reload( null, false );
+                        alert("删除成功!");
+                    } else {
+                        alert(result.errorMsg.description);
+                    }
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                }
+            });
+        }
+    });
+
+    //查看详情
+    $('#estateListTable').on( 'click', 'button#detailBtn', function () {
+        var data = editTable.row($(this).parents('tr')).data();
+        $("#title").html(data.title);
+        $("#description").html(data.description);
+        $("#detail").html(data.content);
+        $("#noticeModal").modal("show");
+    });
+
+    //推送
+    $('#estateListTable').on( 'click', 'button#pushBtn', function () {
+        var thisObject=$(this);
+        var comfirm=confirm("确定向每个用户推送该条公告?");
+        if(comfirm) {
+            thisObject.html('短信发送中&nbsp;<i class="fa fa-spinner fa-spin">');
+            thisObject.attr("disabled","disabled");
+            var data = editTable.row($(this).parents('tr')).data();
+            $.ajax({
+                type: "get",
+                async: true,
+                url: urlConfig.pushNotice+data.id,
+                dataType: "json", //返回数据形式为json
+                success: function (result) {
+                    if (result.status) {
+                        thisObject.html('发送短信');
+                        alert("发送成功");
+                    } else {
+                        alert(result.errorMsg.description);
+                    }
+                    thisObject.removeAttr("disabled");
+                },
+                error: function () {
+                    alert("服务器连接失败,请重试!");
+                    thisObject.removeAttr("disabled");
+                }
+            });
+        }
+    });
+
+    //初始化表格数据
+    function initDataTable(){
+        editTable=$('#estateListTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax":{
+                "url": urlConfig.noticeList,
+                "dataSrc": "jsonString"
+            },
+            "columnDefs": [{
+                "targets": 0,
+                "data":null,
+                "orderable": false,
+                "searchable": false,
+                "createdCell": function (nTd, sData, oData, iRow, iCol) {
+                    var startnum=this.api().page()*(this.api().page.info().length);
+                    $(nTd).html(iRow+1+startnum);
+                }
+            },{
+                "targets": 1,
+                "data": "title",
+                "visible": true,
+                "orderable": false,
+                "searchable": false
+
+            },{
+                "targets": 2,
+                "data": "time",
+                "visible": true,
+                "orderable": true,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    return formatDate(data,"yyyy-MM-dd");
+                }
+            },{
+                "targets": 3,
+                "data": "expiretime",
+                "visible": true,
+                "orderable": false,
+                "searchable": false,
+                "render": function ( data, type, row ) {
+                    return formatDate(data,"yyyy-MM-dd");
+                }
+            },{
+                "targets": 4,
+                "data": "consoleUserEntity.name",
+                "visible": true,
+                "orderable": false,
+                "searchable": false
+            },{
+                "targets": 5,
+                "data": null,
+                "orderable": false,
+                "searchable": false,
+                "defaultContent":
+                        "<button id='delrowBtn' class='btn btn-primary' type='button'>删除</button>&ensp;"+
+                        "<button id='detailBtn' class='btn btn-primary' type='button'>详情</button>&ensp;"+
+                        "<button id='pushBtn' class='btn btn-primary' type='button'>发送短信</button>"
+            }
+            ],
+            "order": [[ 2, "asc" ]],
+            "autoWidth":false,
+            "sDom":
+                    "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>tr<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+            "language": {
+                "emptyTable":     "没有相关数据",
+                "info": "显示 _START_ 到 _END_ 条, 共 _TOTAL_ 条记录",
+                "infoEmpty":      "没有相关数据",
+                "infoFiltered":   "(筛选自 _MAX_ 条记录)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "每页显示 _MENU_ 条",
+                "loadingRecords": "加载中",
+                "processing":     "数据加载中...",
+                "search":         "搜索:",
+                "zeroRecords":    "没有找到匹配数据",
+                "paginate": {
+                    "first":      "首页",
+                    "last":       "末页",
+                    "next":       "下一页",
+                    "previous":   "上一页"
+                },
+                "aria": {
+                    "sortAscending":  ":正序",
+                    "sortDescending": ":倒序"
+                }
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        LoadDataTablesScripts(initDataTable);
+    });
+</script>

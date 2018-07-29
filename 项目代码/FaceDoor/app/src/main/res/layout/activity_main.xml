@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/write"
+    android:orientation="vertical">
+    <!-- 登录页面的最上面的渲染图片-->
+    <RelativeLayout
+        android:id="@+id/rl_title_login"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="4.1"
+        android:background="@color/write"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/iv_verpass_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+        <!--android:background="@drawable/yunpass"-->
+    </RelativeLayout>
+
+    <!-- 用户名和密码 -->
+    <TableLayout
+        android:id="@+id/tl_content_login"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_weight="3"
+        android:gravity="center"
+  >
+
+        <TableRow
+            android:paddingBottom="20dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+
+            <EditText
+                android:id="@+id/et_edit_useName_login"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:singleLine="true"
+                android:background="@drawable/bg_edittext_selector"
+                android:gravity="center"
+                android:inputType="phone"
+                android:imeOptions="actionNext"
+                android:hint="输入用户名" />
+        </TableRow>
+
+        <TableRow
+            android:paddingBottom="10dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/et_edit_password_login"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:singleLine="true"
+                android:gravity="center"
+                android:imeOptions="actionDone"
+                android:background="@drawable/bg_edittext_selector"
+                android:hint="输入密码"
+                android:inputType="textPassword" />
+        </TableRow>
+
+    </TableLayout>
+
+    <!-- 记住密码 -->
+
+
+    <!-- 登录 -->
+    <LinearLayout
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/fillet_button"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <!--找回密码-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/tv_forget_password_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="忘记密码"
+            android:textColor="@drawable/textview3"
+            android:layout_marginRight="60dp"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:layout_gravity="right"
+            android:id="@+id/ib_zuce_buttton_login"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:background="@drawable/zuce"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+
+    </LinearLayout>
+
+    <!--注册-->
+    <RelativeLayout
+        android:id="@+id/rl_buttom_login"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal" >
+
+
+        <!-- 原先界面中的退出Button -->
+        <!-- <TextView
+            android:id="@+id/exit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/exit"
+            android:textColor="@drawable/textview3"
+            android:textSize="20sp" /> -->
+    </RelativeLayout>
+
+</LinearLayout>
