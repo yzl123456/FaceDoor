@@ -2,7 +2,8 @@
 
 **项目展示**  
 
-门禁客户端：
+门禁客户端：  
+
 ![image](https://github.com/yzl123456/FaceDoor/blob/master/项目展示/门禁客户端/人脸识别.gif?raw=true)  
 
 业主APP端： 
