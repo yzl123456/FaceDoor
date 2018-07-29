@@ -1,6 +1,10 @@
 # FaceDoor智慧人脸门禁系统项目
 
 **项目展示**  
+
+门禁客户端：
+![image](https://github.com/yzl123456/FaceDoor/blob/master/项目展示/门禁客户端/人脸识别.gif?raw=true)  
+
 业主APP端： 
 
 ![image](https://github.com/yzl123456/FaceDoor/blob/master/项目展示/业主APP端/2-3_主页.png?raw=true)  
@@ -17,9 +21,6 @@ B端：
 ![image](https://github.com/yzl123456/FaceDoor/blob/master/项目展示/服务器端/人脸识别时间统计.png?raw=true)  
 ![image](https://github.com/yzl123456/FaceDoor/blob/master/项目展示/服务器端/门禁访问分级.png?raw=true)  
 ![image](https://github.com/yzl123456/FaceDoor/blob/master/项目展示/服务器端/门禁进出记录.png?raw=true)  
-
-门禁客户端：
-
 
 
 **文件说明**  
